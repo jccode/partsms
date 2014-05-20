@@ -1,0 +1,5 @@
+*.pyc
+/*env*/
+docs/_build
+*.sqlite3
+*~

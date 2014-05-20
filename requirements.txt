@@ -1,0 +1,4 @@
+django>=1.6.4
+django-fsm>=2.0.1
+django-fsm-admin>=1.0.0
+django-admin-tools>=0.5.1
