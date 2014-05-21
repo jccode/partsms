@@ -8,6 +8,14 @@ from django.utils.translation import ugettext_lazy as _
 
 class Department(models.Model):
     name = models.CharField(_('name'), max_length=40)
+    
+    def __unicode__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('department')
+        verbose_name_plural = _('departments')
+        
 
 
 class Employee(models.Model):
@@ -16,3 +24,10 @@ class Employee(models.Model):
     leader = models.ForeignKey('self', blank=True, null=True)
     num = models.CharField(_('number'), max_length=20)
 
+    def __unicode__(self):
+        return self.user
+
+    class Meta:
+        verbose_name = _('employee')
+        verbose_name_plural = _('employees')
+    
