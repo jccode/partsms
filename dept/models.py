@@ -20,8 +20,8 @@ class Department(models.Model):
 
 class Employee(models.Model):
     user = models.OneToOneField(User)
-    department = models.ForeignKey(Department, blank=True, null=True)
-    leader = models.ForeignKey('self', blank=True, null=True)
+    department = models.ForeignKey(Department, blank=True, null=True, verbose_name=_('department'))
+    leader = models.ForeignKey('self', blank=True, null=True, verbose_name=_('leader'))
     num = models.CharField(_('number'), max_length=20)
 
     def __unicode__(self):

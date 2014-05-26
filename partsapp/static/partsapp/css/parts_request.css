@@ -1,0 +1,27 @@
+
+/* override TabularInline field width */
+
+.field-pn .vTextField {
+    width: 10em;
+}
+
+.field-bin .vTextField {
+    width: 10em;
+}
+
+.field-description .vTextField {
+    width: 15em;
+}
+
+.field-unit .vTextField {
+    width: 15em;
+}
+
+.field-unit .vTextField {
+    width: 7em;
+}
+
+.field-balance input {
+    width: 7em;
+}
+

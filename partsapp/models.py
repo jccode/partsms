@@ -17,8 +17,11 @@ class PartsRequest(models.Model):
     # TODO: approver 会有多个人. 多人选择控件. 但不存在外键关联
     approver = models.CharField(_('Approver'), max_length=200) 
 
-    
+    class Meta:
+        verbose_name = _('General Parts Request')
+        verbose_name_plural = _('General Parts Requests')
 
+        
 
 class RequestDetail(models.Model):
     request = models.ForeignKey(PartsRequest)
