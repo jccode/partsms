@@ -25,7 +25,7 @@ class Employee(models.Model):
     num = models.CharField(_('number'), max_length=20)
 
     def __unicode__(self):
-        return self.user
+        return self.user.username
 
     class Meta:
         verbose_name = _('employee')
