@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django import forms
 
-from django.contrib.admin.widgets import ForeignKeyRawIdWidget
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.admin.sites import site
 from django.contrib.auth import models as auth
 
 from partsapp.models import PartsRequest, RequestDetail
+from dept.models import Employee
 from django.utils.translation import ugettext as _
 
 
@@ -24,18 +25,18 @@ class RequestDetailInline(admin.TabularInline):
     extra = 1
 
 
-users = (('h','h'), ('e','e'), ('l','l'), ('o','o'), 
-         ('a','a'), ('b','b'), ('c','c'), )
+
     
 class RequestAdminForm(forms.ModelForm):
-    approver = forms.ModelMultipleChoiceField(label=_('Approver'),
-                                              widget=forms.SelectMultiple,
-                                              queryset=auth.User.objects.all())
+    # approver = forms.ModelMultipleChoiceField(label=_('Approver'),
+    #                                           widget=forms.SelectMultiple,
+    #                                           queryset=Employee.objects.all())
+
+    approver = forms.ModelMultipleChoiceField(queryset=Employee.objects.all(), 
+                                              widget=FilteredSelectMultiple("verbose name", is_stacked=False))
+
     class Meta:
         model = PartsRequest
-        # widgets = {
-        #     'approver': forms.CheckboxSelectMultiple(choices=users)
-        # }
         
     
 
