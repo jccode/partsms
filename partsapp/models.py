@@ -3,12 +3,14 @@
 from django.db import models
 from django.contrib.auth import models as auth
 from django.utils.translation import ugettext_lazy as _
+from django_fsm import FSMIntegerField, transition
 from dept.models import Employee
+
 
 # Create your models here.
 
-
 class PartsRequest(models.Model):
+    request_no = models.CharField(_('Request number'), primary_key=True, max_length=20)
     apply_type = models.CharField(_('Apply type'), max_length=50)
     material_type = models.CharField(_('Material type'), max_length=50)
     apply_reason = models.CharField(_('Apply reason'), max_length=200)
@@ -23,8 +25,6 @@ class PartsRequest(models.Model):
         verbose_name = _('General Parts Request')
         verbose_name_plural = _('General Parts Requests')
 
-        
-
 class RequestDetail(models.Model):
     request = models.ForeignKey(PartsRequest)
     pn = models.CharField(_('P/N'), max_length=20)
@@ -38,5 +38,84 @@ class RequestDetail(models.Model):
     usage_by_once = models.IntegerField(_('Usage by once'), blank=True, null=True)
     remark = models.TextField(_('Remark'), max_length=200, blank=True, null=True)
 
+    
+
+class Status(object):
+    """
+    PartsRecycle workflow status
+    """
+    DRAFT = 0
+    SUPERVISOR_APPROVE = 1
+    ENGINEER_APPROVE = 2
+    REPAIR = 3
+    COMPLETED = 4
+
+    CHOICES = (
+        (DRAFT, _('draft')),
+        (SUPERVISOR_APPROVE, _('supervisor approve')),
+        (ENGINEER_APPROVE, _('engineer approve')),
+        (REPAIR, _('repaire')),
+        (COMPLETED, _('completed')), 
+    )
+    
+SHIFT_CHOICES = (
+    ('A', 'Shift A'),
+    ('B', 'Shift B'),
+    ('C', 'Shift C'), 
+)
+
+STATUS_BEFORE_RECYCLE = (
+    ('Good', 'Good'),
+    ('NG', 'NG'),
+    ('Unknow', 'Unknow'), 
+)
+
+STATUS_AFTER_REPAIRED = (
+    ('Repaied', 'Repaired'),
+    ('Scrapped', 'Scrapped'),
+    ('Engineering material', 'Engineering material'), 
+)
+
+class PartsRecycle(models.Model):
+    request_no = models.ForeignKey(PartsRequest, verbose_name=_('Request number'))
+    parts = models.CharField(_('Parts'), max_length=100) # ref `RequestDetail.description`
+    pn = models.CharField(_('P/N'), max_length=20)
+    sn = models.CharField(_('SN'), max_length=30)
+    tool = models.CharField(_('Tool'), max_length=20)
+    stn = models.CharField(_('STN'), max_length=50)
+
+    employee = models.ForeignKey(Employee, related_name="+", verbose_name=_('Recycler'))
+    supervisor = models.ForeignKey(Employee, related_name="+", verbose_name=_('Supervisor'))
+    manager = models.ForeignKey(Employee, related_name="+", verbose_name=_('Manager'))
+    shift = models.CharField(_('Shift'), choices=SHIFT_CHOICES, max_length=3)
+    return_date = models.DateField(_('Return Date'))
+    status_before_recycle = models.CharField(_('Status before recycle'), choices=STATUS_BEFORE_RECYCLE, max_length=20)
+    description = models.TextField(_('Description'), max_length=200, blank=True, null=True)
+
+    approver = models.ForeignKey(Employee, related_name="+", verbose_name=_('Approver'))
+    approve_date = models.DateField(_('Approve Date'))
+    confirm_result = models.CharField(_('Confirm result'), max_length=50)
+    remark_approved = models.TextField(_('Remark'), max_length=200, blank=True, null=True)
+
+    engineer_approver = models.ForeignKey(Employee, related_name="+", verbose_name=_('Approver'))
+    engineer_approve_date = models.DateField(_('Approve Date'))
+    repaireable = models.BooleanField(_('Repairable'))
+    engineer_ack_status = models.CharField(_('Status'), max_length=20)
+    remark_engineer = models.TextField(_('Remark'), max_length=200, blank=True, null=True)
+
+    repairer = models.ForeignKey(Employee, related_name="+", verbose_name=_('Approver'))
+    repair_date = models.DateField(_('Repaired Date'))
+    remark_repairer = models.TextField(_('Remark'), max_length=200, blank=True, null=True)
+    status_after_repaired = models.CharField(_('Status after repaired'), choices=STATUS_AFTER_REPAIRED, max_length=20)
+
+    store_in_date = models.DateField(_('Store Date'), blank=True, null=True)
+    store_in_num = models.CharField(_('Store in number'), max_length=20, blank=True, null=True)
+
+    status = FSMIntegerField(default=Status.DRAFT, verbose_name=_('State'), choices=Status.CHOICES, protected=True)
+
+    
+    class Meta:
+        verbose_name = _('Parts Recycle')
+        verbose_name_plural = _('Parts Recycles')
 
     

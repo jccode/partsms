@@ -44,7 +44,7 @@ class RequestAdminForm(forms.ModelForm):
 class RequestAdmin(admin.ModelAdmin):
     form = RequestAdminForm
     inlines = [RequestDetailInline]
-    list_display = ('id', 'apply_type', 'material_type', 'request_date', 'apply_reason',
+    list_display = ('request_no', 'apply_type', 'material_type', 'request_date', 'apply_reason',
                     'department', 'employee_num',
                     'employee', 'cost_center', 'approver_name', )
 
