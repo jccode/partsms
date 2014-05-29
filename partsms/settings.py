@@ -106,3 +106,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, "static"), 
 # )
+
+
+
+
+ADMIN_TOOLS_INDEX_DASHBOARD = 'partsms.dashboard.CustomIndexDashboard'
+ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'partsms.dashboard.CustomAppIndexDashboard'
+
