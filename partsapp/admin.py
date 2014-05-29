@@ -33,7 +33,8 @@ class RequestAdminForm(forms.ModelForm):
     #                                           queryset=Employee.objects.all())
 
     approver = forms.ModelMultipleChoiceField(queryset=Employee.objects.all(), 
-                                              widget=FilteredSelectMultiple("verbose name", is_stacked=False))
+                                              widget=FilteredSelectMultiple(_("Approver"), is_stacked=False),
+                                              label=_('Approver'))
 
     class Meta:
         model = PartsRequest
@@ -49,15 +50,17 @@ class RequestAdmin(admin.ModelAdmin):
 
     def department(self, obj):
         return obj.employee.department
+    department.short_description = _('department')
 
     def employee_num(self, obj):
         return obj.employee.num
+    employee_num.short_description = _('employee number')
 
     def approver_name(self, obj):
         approver_ids = obj.approver
         approvers = map(lambda uid: auth.User.objects.get(id=uid).username, approver_ids.split(','))
         return "[%s]" % (", ".join(approvers))
-    approver_name.short_description = _('approver')
+    approver_name.short_description = _('Approver')
         
 
     # def get_form(self, request, obj=None, **kwargs):

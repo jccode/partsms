@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
+  
 
 class Department(models.Model):
     name = models.CharField(_('name'), max_length=40)
@@ -30,4 +31,5 @@ class Employee(models.Model):
     class Meta:
         verbose_name = _('employee')
         verbose_name_plural = _('employees')
+
     

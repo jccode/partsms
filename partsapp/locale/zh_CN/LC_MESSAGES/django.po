@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-26 15:08+0800\n"
-"PO-Revision-Date: 2014-05-26 15:11+0800\n"
+"POT-Creation-Date: 2014-05-29 11:25+0800\n"
+"PO-Revision-Date: 2014-05-29 11:31+0800\n"
 "Last-Translator: Jessie <junchang.chen@hgst.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: Chinese\n"
@@ -17,66 +17,86 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: models.py:11
-msgid "Apply type"
-msgstr "申请类型"
-
-#: models.py:12
-msgid "Material type"
-msgstr "物料类型"
-
-#: models.py:13
-msgid "Apply reason"
-msgstr "申请原因"
-
-#: models.py:14
-msgid "Employee"
-msgstr "领用人"
-
-#: models.py:15
-msgid "Cost center"
-msgstr "成本中心"
-
-#: models.py:18
+#: admin.py:36 admin.py:37 admin.py:63 models.py:19
 msgid "Approver"
 msgstr "批准领用人"
 
-#: models.py:25
+#: admin.py:53
+msgid "department"
+msgstr "部门"
+
+#: admin.py:57
+msgid "employee number"
+msgstr "工号"
+
+#: models.py:12
+msgid "Apply type"
+msgstr "申请类型"
+
+#: models.py:13
+msgid "Material type"
+msgstr "物料类型"
+
+#: models.py:14
+msgid "Apply reason"
+msgstr "申请原因"
+
+#: models.py:15
+msgid "Employee"
+msgstr "领用人"
+
+#: models.py:16
+msgid "Cost center"
+msgstr "成本中心"
+
+#: models.py:20
+msgid "Request Date"
+msgstr "日期"
+
+#: models.py:23
+msgid "General Parts Request"
+msgstr "生产辅料申请单"
+
+#: models.py:24
+msgid "General Parts Requests"
+msgstr "生产辅料申请单"
+
+#: models.py:30
 msgid "P/N"
 msgstr "物料编号"
 
-#: models.py:26
+#: models.py:31
 msgid "Bin"
 msgstr "储存位置"
 
-#: models.py:27
+#: models.py:32
 msgid "Description"
 msgstr "物料名称"
 
-#: models.py:28
+#: models.py:33
 msgid "Quantity"
 msgstr "领(退)数量"
 
-#: models.py:29
+#: models.py:34
 msgid "Actual Qty"
 msgstr "实发(收)数量"
 
-#: models.py:30
+#: models.py:35
 msgid "Unit"
 msgstr "物料单位"
 
-#: models.py:31
+#: models.py:36
 msgid "Over Plan Usage"
 msgstr "超过计划用量"
 
-#: models.py:32
+#: models.py:37
 msgid "Balance"
 msgstr "库存"
 
-#: models.py:33
+#: models.py:38
 msgid "Usage by once"
 msgstr "单次最大领用量"
 
-#: models.py:34
+#: models.py:39
 msgid "Remark"
 msgstr "备注"
