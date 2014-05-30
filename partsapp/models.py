@@ -21,6 +21,9 @@ class PartsRequest(models.Model):
     approver = models.CharField(_('Approver'), max_length=200)
     request_date = models.DateTimeField(_('Request Date'), auto_now_add=True)
 
+    def __unicode__(self):
+        return self.request_no
+
     class Meta:
         verbose_name = _('General Parts Request')
         verbose_name_plural = _('General Parts Requests')
@@ -29,7 +32,7 @@ class RequestDetail(models.Model):
     request = models.ForeignKey(PartsRequest)
     pn = models.CharField(_('P/N'), max_length=20)
     bin = models.CharField(_('Bin'), max_length=50)
-    description = models.CharField(_('Description'), max_length=100)
+    description = models.CharField(_('Parts name'), max_length=100)
     qty = models.IntegerField(_('Quantity'))
     actual_qty = models.IntegerField(_('Actual Qty') , blank=True, null=True)
     unit = models.CharField(_('Unit'), max_length=20)
