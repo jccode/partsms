@@ -5,7 +5,7 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.admin.sites import site
 from django.contrib.auth import models as auth
 
-from partsapp.models import PartsRequest, RequestDetail, PartsRecycle
+from partsapp.models import PartsRequest, RequestDetail, PartsRecycle, Status
 from dept.models import Employee
 from django.utils.translation import ugettext as _
 
@@ -81,30 +81,82 @@ class RequestAdmin(admin.ModelAdmin):
 class PartsRecycleForm(forms.ModelForm):
     pass
 
-        
+
 class PartsRecycleAdmin(admin.ModelAdmin):
-    fieldsets = (
-        (_('Parts'), {
-            'fields': ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn')
-        }),
-        (_('Recycle'), {
+    _fields = [
+        {
+            'group': 'Parts', 
+            'status': Status.DRAFT, 
+            'fields': ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn'),
+        }, 
+        {
+            'group': 'Recycle', 
+            'status': Status.DRAFT, 
             'fields': ('employee', 'supervisor', 'manager', 'shift', 'return_date',
-                       'status_before_recycle', 'description')
-        }),
-        (_('Approve'), {
-            'fields': ('approver', 'approve_date', 'confirm_result', 'remark_approved')
-        }),
-        (_('Engineer Approve'), {
+                       'status_before_recycle', 'description'), 
+        }, 
+        {
+            'group': 'Approve', 
+            'status': Status.SUPERVISOR_APPROVE, 
+            'fields': ('approver', 'approve_date', 'confirm_result', 'remark_approved'), 
+        }, 
+        {
+            'group': 'Engineer Approve', 
+            'status': Status.ENGINEER_APPROVE, 
             'fields': ('engineer_approver', 'engineer_approve_date', 'repaireable',
-                       'engineer_ack_status', 'remark_engineer')
-        }),
-        (_('Repair'), {
+                       'engineer_ack_status', 'remark_engineer'), 
+        }, 
+        {
+            'group': 'Repair', 
+            'status': Status.REPAIR, 
             'fields': ('repairer', 'repair_date', 'remark_repairer', 'status_after_repaired',
                        'store_in_date', 'store_in_num')
-        })
-    )
-    
+        }
+    ]
 
+    list_display = ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn', 'employee', 'shift', 'return_date', 'status_before_recycle', )
+
+    # exclude = ('supervisor', 'manager', 'shift', 'return_date',
+    #            'status_before_recycle', 'description', )
+
+    # fieldsets = (
+    #     (_('Parts'), {
+    #         'fields': _fields['Parts']
+    #     }),
+    #     (_('Recycle'), {
+    #         'fields': _fields['Recycle']
+    #     }),
+    #     (_('Approve'), {
+    #         'fields': _fields['Approve']
+    #     }),
+    #     (_('Engineer Approve'), {
+    #         'fields': _fields['Engineer_Approve']
+    #     }),
+    #     (_('Repair'), {
+    #         'fields': _fields['Repair']
+    #     })
+    # )
+
+
+    def get_form(self, request, obj=None, **kwargs):
+        status = Status.DRAFT
+        if obj:
+            status = obj.status
+
+        # self.fieldsets = [
+        #     (_('Parts'), { 'fields': self._fields['Parts'] }), 
+        #     (_('Recycle'), { 'fields': self._fields['Recycle'] }), 
+        # ]
+        # self.exclude = self._fields['Approve'] + self._fields['Engineer Approve'] + self._fields['Repair']
+
+        self.fieldsets = [ (_(v['group']), {'fields': v['fields']}) for v in self._fields if v['status'] <= status ]
+        # self.exclude = ( f for f in v['fields'] for v in self._fields if v['status'] <= status )
+            
+        return super(PartsRecycleAdmin, self).get_form(request, obj, **kwargs)
+
+
+
+    
         
 # Register your models here.
 admin.site.register(PartsRequest, RequestAdmin)
