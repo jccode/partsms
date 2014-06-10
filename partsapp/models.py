@@ -114,11 +114,35 @@ class PartsRecycle(models.Model):
     store_in_date = models.DateField(_('Store Date'), blank=True, null=True)
     store_in_num = models.CharField(_('Store in number'), max_length=20, blank=True, null=True)
 
-    status = FSMIntegerField(default=Status.DRAFT, verbose_name=_('State'), choices=Status.CHOICES, protected=True)
+    state = FSMIntegerField(default=Status.DRAFT, verbose_name=_('State'), choices=Status.CHOICES, protected=True)
 
     
     class Meta:
         verbose_name = _('Parts Recycle')
         verbose_name_plural = _('Parts Recycles')
 
-    
+    def __unicode__(self):
+        return "%s %s" % (self.parts, self.sn)
+        
+
+
+    # ########################################
+    # transition
+
+    @transition(field=state, source=Status.DRAFT, target=Status.SUPERVISOR_APPROVE)
+    def supervisor_approve(self):
+        pass
+
+    @transition(field=state, source=Status.SUPERVISOR_APPROVE, target=Status.ENGINEER_APPROVE)
+    def engineer_approve(self):
+        pass
+
+    @transition(field=state, source=Status.ENGINEER_APPROVE, target=Status.REPAIR)
+    def repair(self):
+        pass
+
+    @transition(field=state, source=Status.REPAIR, target=Status.COMPLETED)
+    def complete(self):
+        pass
+
+        

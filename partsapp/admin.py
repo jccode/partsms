@@ -1,13 +1,12 @@
 from django.contrib import admin
 from django import forms
-
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.admin.sites import site
 from django.contrib.auth import models as auth
-
+from django.utils.translation import ugettext as _
+from fsm_admin.mixins import FSMTransitionMixin
 from partsapp.models import PartsRequest, RequestDetail, PartsRecycle, Status
 from dept.models import Employee
-from django.utils.translation import ugettext as _
 
 
 
@@ -82,7 +81,7 @@ class PartsRecycleForm(forms.ModelForm):
     pass
 
 
-class PartsRecycleAdmin(admin.ModelAdmin):
+class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
     _fields = [
         {
             'group': 'Parts', 
@@ -114,7 +113,8 @@ class PartsRecycleAdmin(admin.ModelAdmin):
         }
     ]
 
-    list_display = ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn', 'employee', 'shift', 'return_date', 'status_before_recycle', )
+    list_display = ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn', 'employee', 'shift',
+                    'return_date', 'status_before_recycle', )
 
     # exclude = ('supervisor', 'manager', 'shift', 'return_date',
     #            'status_before_recycle', 'description', )
@@ -141,7 +141,7 @@ class PartsRecycleAdmin(admin.ModelAdmin):
     def get_form(self, request, obj=None, **kwargs):
         status = Status.DRAFT
         if obj:
-            status = obj.status
+            status = obj.state
 
         # self.fieldsets = [
         #     (_('Parts'), { 'fields': self._fields['Parts'] }), 
