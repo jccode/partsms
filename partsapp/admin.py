@@ -116,6 +116,8 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
     list_display = ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn', 'employee', 'shift',
                     'return_date', 'status_before_recycle', )
 
+    change_form_template = 'admin/partsapp/change_form_fsm_adm.html'
+
     # exclude = ('supervisor', 'manager', 'shift', 'return_date',
     #            'status_before_recycle', 'description', )
 

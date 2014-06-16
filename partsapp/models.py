@@ -129,19 +129,23 @@ class PartsRecycle(models.Model):
     # ########################################
     # transition
 
-    @transition(field=state, source=Status.DRAFT, target=Status.SUPERVISOR_APPROVE)
+    @transition(field=state, source=Status.DRAFT, target=Status.SUPERVISOR_APPROVE,
+                custom={'button_name':_('Supervisor Approve')})
     def supervisor_approve(self):
         pass
 
-    @transition(field=state, source=Status.SUPERVISOR_APPROVE, target=Status.ENGINEER_APPROVE)
+    @transition(field=state, source=Status.SUPERVISOR_APPROVE, target=Status.ENGINEER_APPROVE,
+                custom={'button_name':_('Engineer Approve')})
     def engineer_approve(self):
         pass
 
-    @transition(field=state, source=Status.ENGINEER_APPROVE, target=Status.REPAIR)
+    @transition(field=state, source=Status.ENGINEER_APPROVE, target=Status.REPAIR,
+                custom={'button_name':_('Repair')})
     def repair(self):
         pass
 
-    @transition(field=state, source=Status.REPAIR, target=Status.COMPLETED)
+    @transition(field=state, source=Status.REPAIR, target=Status.COMPLETED,
+                custom={'button_name':_('Stock In')})
     def complete(self):
         pass
 
