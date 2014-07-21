@@ -114,7 +114,7 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
     ]
 
     list_display = ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn', 'employee', 'shift',
-                    'return_date', 'status_before_recycle', )
+                    'return_date', 'status_before_recycle', 'state')
 
     change_form_template = 'admin/partsapp/change_form_fsm_adm.html'
 
@@ -153,6 +153,9 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
 
         self.fieldsets = [ (_(v['group']), {'fields': v['fields']}) for v in self._fields if v['status'] <= status ]
         # self.exclude = ( f for f in v['fields'] for v in self._fields if v['status'] <= status )
+
+        # test
+        # print "============== %s " % request.user.has_perm('partsapp.can_approve');
             
         return super(PartsRecycleAdmin, self).get_form(request, obj, **kwargs)
 

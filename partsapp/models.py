@@ -74,9 +74,9 @@ STATUS_BEFORE_RECYCLE = (
 )
 
 STATUS_AFTER_REPAIRED = (
-    ('Repaied', 'Repaired'),
-    ('Scrapped', 'Scrapped'),
-    ('Engineering material', 'Engineering material'), 
+    ('Repaied', _('Repaired')),
+    ('Scrapped', _('Scrapped')),
+    ('Engineering material', _('Engineering material')), 
 )
 
 class PartsRecycle(models.Model):
@@ -95,18 +95,18 @@ class PartsRecycle(models.Model):
     status_before_recycle = models.CharField(_('Status before recycle'), choices=STATUS_BEFORE_RECYCLE, max_length=20)
     description = models.TextField(_('Description'), max_length=200, blank=True, null=True)
 
-    approver = models.ForeignKey(Employee, related_name="+", verbose_name=_('Approver'), null=True)
+    approver = models.ForeignKey(Employee, related_name="+", verbose_name=_('Confirmmer'), null=True)
     approve_date = models.DateField(_('Approve Date'), null=True)
     confirm_result = models.CharField(_('Confirm result'), max_length=50, null=True)
     remark_approved = models.TextField(_('Remark'), max_length=200, blank=True, null=True)
 
-    engineer_approver = models.ForeignKey(Employee, related_name="+", verbose_name=_('Approver'), null=True)
+    engineer_approver = models.ForeignKey(Employee, related_name="+", verbose_name=_('Confirmmer'), null=True)
     engineer_approve_date = models.DateField(_('Approve Date'), null=True)
     repaireable = models.NullBooleanField(_('Repairable'), null=True)
-    engineer_ack_status = models.CharField(_('Status'), max_length=20, null=True)
+    engineer_ack_status = models.CharField(_('Status'), choices=STATUS_AFTER_REPAIRED, max_length=20, null=True)
     remark_engineer = models.TextField(_('Remark'), max_length=200, blank=True, null=True)
 
-    repairer = models.ForeignKey(Employee, related_name="+", verbose_name=_('Approver'), null=True)
+    repairer = models.ForeignKey(Employee, related_name="+", verbose_name=_('Repairer'), null=True)
     repair_date = models.DateField(_('Repaired Date'), null=True)
     remark_repairer = models.TextField(_('Remark'), max_length=200, blank=True, null=True)
     status_after_repaired = models.CharField(_('Status after repaired'), choices=STATUS_AFTER_REPAIRED, max_length=20, null=True)
@@ -120,6 +120,11 @@ class PartsRecycle(models.Model):
     class Meta:
         verbose_name = _('Parts Recycle')
         verbose_name_plural = _('Parts Recycles')
+        permissions = [
+            ('can_approve', 'Can approve'), 
+            ('can_engineer_approve', 'Engineer approve'), 
+            ('can_repair', 'Can repair')
+        ]
 
     def __unicode__(self):
         return "%s %s" % (self.parts, self.sn)
@@ -149,4 +154,3 @@ class PartsRecycle(models.Model):
     def complete(self):
         pass
 
-        

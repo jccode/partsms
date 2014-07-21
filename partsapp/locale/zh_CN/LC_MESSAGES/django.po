@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-05-30 13:55+0800\n"
-"PO-Revision-Date: 2014-05-30 13:56+0800\n"
+"POT-Creation-Date: 2014-07-21 14:51+0800\n"
+"PO-Revision-Date: 2014-07-21 14:53+0800\n"
 "Last-Translator: Jessie <junchang.chen@hgst.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: Chinese\n"
@@ -17,8 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: admin.py:34 admin.py:35 admin.py:60 models.py:21 models.py:95 models.py:100
-#: models.py:106
+#: admin.py:33 admin.py:35 admin.py:60 models.py:21
 msgid "Approver"
 msgstr "批准领用人"
 
@@ -30,15 +29,7 @@ msgstr "部门"
 msgid "employee number"
 msgstr "工号"
 
-#: admin.py:85 models.py:81
-msgid "Parts"
-msgstr "备件"
-
-#: admin.py:88
-msgid "Recycle"
-msgstr "退料人"
-
-#: models.py:13 models.py:80
+#: models.py:13 models.py:83
 msgid "Request number"
 msgstr "领料单号"
 
@@ -66,154 +57,197 @@ msgstr "成本中心"
 msgid "Request Date"
 msgstr "日期"
 
-#: models.py:25
+#: models.py:28
 msgid "General Parts Request"
 msgstr "生产辅料申请单"
 
-#: models.py:26
+#: models.py:29
 msgid "General Parts Requests"
 msgstr "生产辅料申请单"
 
-#: models.py:30 models.py:82
+#: models.py:33 models.py:85
 msgid "P/N"
 msgstr "物料编号"
 
-#: models.py:31
+#: models.py:34
 msgid "Bin"
 msgstr "储存位置"
 
-#: models.py:32
+#: models.py:35
 msgid "Parts name"
 msgstr "备件名称"
 
-#: models.py:33
+#: models.py:36
 msgid "Quantity"
 msgstr "领(退)数量"
 
-#: models.py:34
+#: models.py:37
 msgid "Actual Qty"
 msgstr "实发(收)数量"
 
-#: models.py:35
+#: models.py:38
 msgid "Unit"
 msgstr "物料单位"
 
-#: models.py:36
+#: models.py:39
 msgid "Over Plan Usage"
 msgstr "超过计划用量"
 
-#: models.py:37
+#: models.py:40
 msgid "Balance"
 msgstr "库存"
 
-#: models.py:38
+#: models.py:41
 msgid "Usage by once"
 msgstr "单次最大领用量"
 
-#: models.py:39 models.py:98 models.py:104 models.py:108
+#: models.py:42 models.py:101 models.py:107 models.py:111
 msgid "Remark"
 msgstr "备注"
 
-#: models.py:54
+#: models.py:57
 msgid "draft"
 msgstr "草稿"
 
-#: models.py:55
+#: models.py:58
 msgid "supervisor approve"
 msgstr "主管审批"
 
-#: models.py:56
+#: models.py:59
 msgid "engineer approve"
 msgstr "责任工程师审批"
 
-#: models.py:57
+#: models.py:60
 msgid "repaire"
 msgstr "维修"
 
-#: models.py:58
+#: models.py:61
 msgid "completed"
 msgstr "完成"
 
-#: models.py:83
+#: models.py:77
+msgid "Repaired"
+msgstr "已修好"
+
+#: models.py:78
+msgid "Scrapped"
+msgstr "报废"
+
+#: models.py:79
+msgid "Engineering material"
+msgstr "工程物料"
+
+#: models.py:84
+msgid "Parts"
+msgstr "备件"
+
+#: models.py:86
 msgid "SN"
 msgstr "序列号"
 
-#: models.py:84
+#: models.py:87
 msgid "Tool"
 msgstr ""
 
-#: models.py:85
+#: models.py:88
 msgid "STN"
 msgstr ""
 
-#: models.py:87
+#: models.py:90
 msgid "Recycler"
 msgstr "退料人"
 
-#: models.py:88
+#: models.py:91
 msgid "Supervisor"
 msgstr "主管"
 
-#: models.py:89
+#: models.py:92
 msgid "Manager"
 msgstr "经理"
 
-#: models.py:90
+#: models.py:93
 msgid "Shift"
 msgstr "班次"
 
-#: models.py:91
+#: models.py:94
 msgid "Return Date"
 msgstr "退回日期"
 
-#: models.py:92
+#: models.py:95
 msgid "Status before recycle"
 msgstr "状态"
 
-#: models.py:93
+#: models.py:96
 msgid "Description"
 msgstr "情况描述"
 
-#: models.py:96 models.py:101
+#: models.py:98 models.py:103
+msgid "Confirmmer"
+msgstr "确认人"
+
+#: models.py:99 models.py:104
 msgid "Approve Date"
 msgstr "确认日期"
 
-#: models.py:97
+#: models.py:100
 msgid "Confirm result"
 msgstr "确认结果"
 
-#: models.py:102
+#: models.py:105
 msgid "Repairable"
 msgstr "是否可维修"
 
-#: models.py:103
+#: models.py:106
 msgid "Status"
 msgstr "状态"
 
-#: models.py:107
+#: models.py:109
+msgid "Repairer"
+msgstr "维修人"
+
+#: models.py:110
 msgid "Repaired Date"
 msgstr "维修日期"
 
-#: models.py:109
+#: models.py:112
 msgid "Status after repaired"
 msgstr "状态"
 
-#: models.py:111
+#: models.py:114
 msgid "Store Date"
 msgstr "入库时间"
 
-#: models.py:112
+#: models.py:115
 msgid "Store in number"
 msgstr "入库单号"
 
-#: models.py:114
+#: models.py:117
 msgid "State"
 msgstr "状态"
 
-#: models.py:118
+#: models.py:121
 msgid "Parts Recycle"
 msgstr "备件回收"
 
-#: models.py:119
+#: models.py:122
 msgid "Parts Recycles"
 msgstr "备件回收"
+
+#: models.py:133
+msgid "Supervisor Approve"
+msgstr "主管审批"
+
+#: models.py:138
+msgid "Engineer Approve"
+msgstr "责任工程师审批"
+
+#: models.py:143
+msgid "Repair"
+msgstr "维修"
+
+#: models.py:148
+msgid "Stock In"
+msgstr "入库"
+
+#~ msgid "Recycle"
+#~ msgstr "退料人"
