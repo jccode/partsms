@@ -1,3 +1,4 @@
+import operator
 from django.contrib import admin
 from django import forms
 from django.contrib.admin.widgets import FilteredSelectMultiple
@@ -118,50 +119,25 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
 
     change_form_template = 'admin/partsapp/change_form_fsm_adm.html'
 
-    # exclude = ('supervisor', 'manager', 'shift', 'return_date',
-    #            'status_before_recycle', 'description', )
-
-    # fieldsets = (
-    #     (_('Parts'), {
-    #         'fields': _fields['Parts']
-    #     }),
-    #     (_('Recycle'), {
-    #         'fields': _fields['Recycle']
-    #     }),
-    #     (_('Approve'), {
-    #         'fields': _fields['Approve']
-    #     }),
-    #     (_('Engineer Approve'), {
-    #         'fields': _fields['Engineer_Approve']
-    #     }),
-    #     (_('Repair'), {
-    #         'fields': _fields['Repair']
-    #     })
-    # )
-
-
     def get_form(self, request, obj=None, **kwargs):
         status = Status.DRAFT
         if obj:
             status = obj.state
-
-        # self.fieldsets = [
-        #     (_('Parts'), { 'fields': self._fields['Parts'] }), 
-        #     (_('Recycle'), { 'fields': self._fields['Recycle'] }), 
-        # ]
-        # self.exclude = self._fields['Approve'] + self._fields['Engineer Approve'] + self._fields['Repair']
-
-        self.fieldsets = [ (_(v['group']), {'fields': v['fields']}) for v in self._fields if v['status'] <= status ]
-        # self.exclude = ( f for f in v['fields'] for v in self._fields if v['status'] <= status )
-
-        # test
-        # print "============== %s " % request.user.has_perm('partsapp.can_approve');
-            
+        self.fieldsets = [ (_(v['group']), {
+            # 'classes': ('collapse',),
+            'fields': v['fields']
+        }) for v in self._fields if v['status'] <= status ]
         return super(PartsRecycleAdmin, self).get_form(request, obj, **kwargs)
 
 
+    def get_readonly_fields(self, request, obj=None):
+        status = Status.DRAFT
+        if obj:
+            status = obj.state
+        readonly_fields = reduce(operator.add, [ v['fields'] for v in self._fields if v['status'] < status ], ())
+        return readonly_fields
 
-    
+
         
 # Register your models here.
 admin.site.register(PartsRequest, RequestAdmin)
