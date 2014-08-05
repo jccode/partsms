@@ -17,6 +17,20 @@ from admin_tools.dashboard import modules, Dashboard, AppIndexDashboard
 from admin_tools.utils import get_admin_site_name
 
 
+# Custom module for PartsRecycle
+class PartsRecycleModule(modules.DashboardModule, modules.AppListElementMixin):
+    """
+    Module for PartsRecycle model
+    """
+    template = 'admin_tools/dashboard/modules/model_list.html'
+    models = 'partsapp.models.PartsRecycle'
+    
+    def __init__(self, title=None):
+        pass
+        
+        
+
+
 class CustomIndexDashboard(Dashboard):
     """
     Custom index dashboard for partsms.
@@ -95,9 +109,21 @@ class CustomIndexDashboard(Dashboard):
 
             modules.ModelList(
                 title=_('Applications'),
-                models=['partsapp.*', ]
+                models=['partsapp.*'],
+                exclude=['partsapp.models.PartsRecycle'] 
             ), 
         ]
+
+        self.children.append(modules.ModelList(
+            title =  _('Parts Recycle'),
+            models = ['partsapp.models.PartsRecycle'], 
+            extra = [{
+                'title': 'confirm parts',
+                'change_url': 'http://www.baidu.com', 
+                # 'add_url': 'http://www.sina.com'
+            }]
+        ))
+        
         
         # append a recent actions module
         self.children.append(modules.RecentActions(_('Recent Actions'), 5))

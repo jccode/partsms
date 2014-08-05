@@ -1,0 +1,21 @@
+[
+    {
+        "pk": 1, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "admin", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": true, 
+            "is_staff": true, 
+            "last_login": "2014-08-05T09:24:25.139Z", 
+            "groups": [ ], 
+            "user_permissions": [ ], 
+            "password": "pbkdf2_sha256$12000$aCgIrfl4c1u6$20phe+8fGZ7ZnjaBLxArikxD4MOvEEOrWPc4wWevNjA=", 
+            "email": "junchang.chen@hgst.com", 
+            "date_joined": "2014-05-20T13:17:34.779Z"
+        }
+    }
+]
+
