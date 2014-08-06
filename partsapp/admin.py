@@ -1,8 +1,10 @@
 import operator
 from django.contrib import admin
 from django import forms
+from django.conf.urls import patterns, include, url
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.admin.sites import site
+from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import models as auth
 from django.utils.translation import ugettext as _
 from fsm_admin.mixins import FSMTransitionMixin
@@ -78,6 +80,31 @@ class RequestAdmin(admin.ModelAdmin):
         js = ("partsapp/js/parts_request.js", )
         
 
+
+class PartsRecycleChangeList(ChangeList):
+    
+    def __init__(self, *args):
+        super(PartsRecycleChangeList, self).__init__(*args)
+        
+    def get_queryset(self, request):
+        qs = super(PartsRecycleChangeList, self).get_queryset(request)
+        curr_url = request.path
+        
+        if '/query/' in curr_url:
+            return qs
+        elif '/draft/' in curr_url:
+            return qs.filter(state=0)
+        elif '/supervisorapprove/' in curr_url:
+            return qs.filter(state=1)
+        elif '/engineerapprove/' in curr_url:
+            return qs.filter(state=2)
+        elif '/repair/' in curr_url:
+            return qs.filter(state=3)
+        else:
+            return qs
+        
+        
+        
 class PartsRecycleForm(forms.ModelForm):
     pass
 
@@ -137,7 +164,45 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         readonly_fields = reduce(operator.add, [ v['fields'] for v in self._fields if v['status'] < status ], ())
         return readonly_fields
 
+    def get_urls(self):
+        """
+        
+        Arguments:
+        - `self`:
+        """
+        urls = super(PartsRecycleAdmin, self).get_urls()
+        print urls
+        my_urls = [
+            url(r'^draft/$', self.changelist_view), 
+            url(r'^supervisorapprove/$', self.changelist_view), 
+            url(r'^engineerapprove/$', self.changelist_view), 
+            url(r'^repair/$', self.changelist_view), 
+        ]
+        return my_urls + urls
 
+    # def get_changelist(self, request, **kwargs):
+    #     return PartsRecycleChangeList
+
+    def get_queryset(self, request):
+        qs = super(PartsRecycleAdmin, self).get_queryset(request)
+        curr_url = request.path
+        
+        if '/query/' in curr_url:
+            return qs
+        elif '/draft/' in curr_url:
+            return qs.filter(state=Status.DRAFT)
+        elif '/supervisorapprove/' in curr_url:
+            return qs.filter(state=Status.SUPERVISOR_APPROVE)
+        elif '/engineerapprove/' in curr_url:
+            return qs.filter(state=Status.ENGINEER_APPROVE)
+        elif '/repair/' in curr_url:
+            return qs.filter(state=Status.REPAIR)
+        else:
+            return qs
+        
+        
+
+        
         
 # Register your models here.
 admin.site.register(PartsRequest, RequestAdmin)

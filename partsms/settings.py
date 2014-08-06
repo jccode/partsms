@@ -110,6 +110,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 #     os.path.join(BASE_DIR, "static"), 
 # )
 
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'), 
+)
 
 
 

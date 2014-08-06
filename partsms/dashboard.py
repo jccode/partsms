@@ -12,6 +12,7 @@ And to activate the app index dashboard::
 
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
+from django.utils.importlib import import_module
 
 from admin_tools.dashboard import modules, Dashboard, AppIndexDashboard
 from admin_tools.utils import get_admin_site_name
@@ -25,9 +26,42 @@ class PartsRecycleModule(modules.DashboardModule, modules.AppListElementMixin):
     template = 'admin_tools/dashboard/modules/model_list.html'
     models = 'partsapp.models.PartsRecycle'
     
-    def __init__(self, title=None):
-        pass
+    def __init__(self, **kwargs):
+        self.title = _('Parts Recycle')
+        super(PartsRecycleModule, self).__init__(self.title, **kwargs)
         
+    def init_with_context(self, context):
+        if self._initialized:
+            return
+
+        mod, inst = self.models.rsplit('.', 1)
+        model = import_module(mod)
+        inst = getattr(model, inst)
+
+        add_url = self._get_admin_add_url(inst, context)
+        change_url = self._get_admin_change_url(inst, context)
+        applist_url = self._get_admin_app_list_url(inst, context)
+        # print add_url, change_url, applist_url
+        
+        self.children += [{
+            'title': _('Parts Recycle'),
+            'change_url': change_url + 'draft/', 
+            'add_url': add_url
+        }, {
+            'title': _('supervisor approve'),
+            'change_url': change_url + 'supervisorapprove/'
+        }, {
+            'title': _('engineer approve'),
+            'change_url': change_url + 'engineerapprove/'
+        }, {
+            'title': _('repaire'),
+            'change_url': change_url + 'repair/'
+        }, {
+            'title': _('query'),
+            'change_url': change_url
+        }]
+        
+        self._initialized = True
         
 
 
@@ -114,15 +148,17 @@ class CustomIndexDashboard(Dashboard):
             ), 
         ]
 
-        self.children.append(modules.ModelList(
-            title =  _('Parts Recycle'),
-            models = ['partsapp.models.PartsRecycle'], 
-            extra = [{
-                'title': 'confirm parts',
-                'change_url': 'http://www.baidu.com', 
-                # 'add_url': 'http://www.sina.com'
-            }]
-        ))
+        # self.children.append(modules.ModelList(
+        #     title =  _('Parts Recycle'),
+        #     models = ['partsapp.models.PartsRecycle'], 
+        #     extra = [{
+        #         'title': 'confirm parts',
+        #         'change_url': 'http://www.baidu.com', 
+        #         # 'add_url': 'http://www.sina.com'
+        #     }]
+        # ))
+
+        self.children.append(PartsRecycleModule())
         
         
         # append a recent actions module
