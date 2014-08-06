@@ -145,6 +145,7 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
                     'return_date', 'status_before_recycle', 'state')
 
     change_form_template = 'admin/partsapp/change_form_fsm_adm.html'
+    change_list_template = 'admin/partsapp/change_list.html'
 
     def get_form(self, request, obj=None, **kwargs):
         status = Status.DRAFT
@@ -182,6 +183,10 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
 
     # def get_changelist(self, request, **kwargs):
     #     return PartsRecycleChangeList
+
+    def changelist_view(self, request, extra_context=None):
+        return super(PartsRecycleAdmin, self).changelist_view(request, extra_context)
+        
 
     def get_queryset(self, request):
         qs = super(PartsRecycleAdmin, self).get_queryset(request)
