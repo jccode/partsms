@@ -215,15 +215,16 @@ class CustomAppIndexDashboard(AppIndexDashboard):
         AppIndexDashboard.__init__(self, *args, **kwargs)
 
         if self.app_title == 'Partsapp':
+            self.children.append(modules.ModelList(
+                title=self.app_title,
+                models=['partsapp.*'],
+                exclude=['partsapp.models.PartsRecycle'] 
+            ))
             self.children.append(PartsRecycleModule())
+            
         else:
             self.children.append(modules.ModelList(self.app_title, self.models))
 
-        self.children.append(modules.ModelList(
-            title=self.app_title,
-            models=['partsapp.*'],
-            exclude=['partsapp.models.PartsRecycle'] 
-        ))
 
         # append a model list module and a recent actions module
         self.children += [

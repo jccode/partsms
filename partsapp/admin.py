@@ -2,6 +2,7 @@ import operator
 from django.contrib import admin
 from django import forms
 from django.conf.urls import patterns, include, url
+from django.core.urlresolvers import reverse
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.admin.sites import site
 from django.contrib.admin.views.main import ChangeList
@@ -10,7 +11,7 @@ from django.contrib.auth.decorators import permission_required
 from django.utils.translation import ugettext as _
 from fsm_admin.mixins import FSMTransitionMixin
 from partsapp.models import PartsRequest, RequestDetail, PartsRecycle, Status
-from partsapp.views import my_custom_permission_denied_view
+from partsapp.views import permission_denied_view
 from dept.models import Employee
 
 
@@ -178,10 +179,9 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         my_urls = [
             url(r'^draft/$', self.changlist_view_draft), 
             url(r'^supervisorapprove/$', self.changelist_view_supervisorapprove), 
-            url(r'^engineerapprove/$', self.changelist_view), 
-            url(r'^repair/$', self.changelist_view), 
+            url(r'^engineerapprove/$', self.changelist_view_engineer), 
+            url(r'^repair/$', self.changelist_view_repair), 
             url(r'^query/$', self.changelist_view),
-            url(r'^permissiondenied/$', my_custom_permission_denied_view)
         ]
         return my_urls + urls
 
@@ -214,14 +214,25 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         return self.changelist_view(request, extra_context)
 
     def changelist_view_supervisorapprove(self, request, extra_context=None):
-        @permission_required('partsapp.can_approve', login_url='/permissiondenied')
+        permission_denied_url = reverse('permission_denined_view')
+        @permission_required('partsapp.can_approve', login_url=permission_denied_url)
         def _wrapper(request, extra_context):
             return self.changelist_view(request, extra_context)
         return _wrapper(request, extra_context)
         
+    def changelist_view_engineer(self, request, extra_context=None):
+        @permission_required('partsapp.can_engineer_approve', login_url=reverse('permission_denined_view'))
+        def _wrapper(request, extra_context):
+            return self.changelist_view(request, extra_context)
+        return _wrapper(request, extra_context)
         
+    def changelist_view_repair(self, request, extra_context=None):
+        @permission_required('partsapp.can_repair', login_url=reverse('permission_denined_view'))
+        def _wrapper(request, extra_context):
+            return self.changelist_view(request, extra_context)
+        return _wrapper(request, extra_context)
         
-        
+
         
 # Register your models here.
 admin.site.register(PartsRequest, RequestAdmin)
