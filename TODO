@@ -1,7 +1,7 @@
 ;;; -*- mode: org; -*-
 
 * todo
-** Dashboard定制多个菜单,传入参数,得到不同的列表. 
+** DONE Dashboard定制多个菜单,传入参数,得到不同的列表. 
    分别对应到菜单:
    - 备件回收
    - 回收单确认
@@ -9,11 +9,11 @@
    - 备件维修
    - 查询(这个菜单的列表不作任何过渡)
 
-** 加入权限; 每个菜单的显示与权限绑定;
+** DONE 加入权限; 每个菜单的显示与权限绑定;
+   可以做.
+** DONE Dashboard App Index Page 定制多菜单, 与上面的Dashboard定制菜单相对应
    可以做.
 ** 发送成功后,修改状态,并返回到对应的菜单项;
-** Dashboard App Index Page 定制多菜单, 与上面的Dashboard定制菜单相对应
-   可以做.
 ** 各个菜单点击进去后，面包屑要一致
    可以做. 
    1. 通过 overload change_list.html 模板. 

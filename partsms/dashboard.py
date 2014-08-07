@@ -17,6 +17,8 @@ from django.utils.importlib import import_module
 from admin_tools.dashboard import modules, Dashboard, AppIndexDashboard
 from admin_tools.utils import get_admin_site_name
 
+from partsapp.models import Status
+
 
 # Custom module for PartsRecycle
 class PartsRecycleModule(modules.DashboardModule, modules.AppListElementMixin):
@@ -34,32 +36,67 @@ class PartsRecycleModule(modules.DashboardModule, modules.AppListElementMixin):
         if self._initialized:
             return
 
-        mod, inst = self.models.rsplit('.', 1)
+        mod, inst_str = self.models.rsplit('.', 1)
         model = import_module(mod)
-        inst = getattr(model, inst)
+        inst = getattr(model, inst_str)
 
         add_url = self._get_admin_add_url(inst, context)
         change_url = self._get_admin_change_url(inst, context)
         applist_url = self._get_admin_app_list_url(inst, context)
-        # print add_url, change_url, applist_url
-        
-        self.children += [{
-            'title': _('Parts Recycle'),
-            'change_url': change_url + 'draft/', 
-            'add_url': add_url
-        }, {
-            'title': _('supervisor approve'),
-            'change_url': change_url + 'supervisorapprove/'
-        }, {
-            'title': _('engineer approve'),
-            'change_url': change_url + 'engineerapprove/'
-        }, {
-            'title': _('repaire'),
-            'change_url': change_url + 'repair/'
-        }, {
-            'title': _('query'),
-            'change_url': change_url
-        }]
+
+        user = context['request'].user
+        app_label = inst._meta.app_label
+
+        # add children
+        draft_dict = {'title': _('Parts Recycle') }
+        if user.has_perm('%s.add_%s' % (app_label, inst_str.lower())):
+            draft_dict['add_url'] = add_url
+        if user.has_perm('%s.change_%s' % (app_label, inst_str.lower())):
+            draft_dict['change_url'] = change_url
+        if 'add_url' in draft_dict:
+            self.children.append(draft_dict)
+
+        if user.has_perm('%s.can_approve' % app_label):
+            self.children.append({
+                'title': Status.LABEL[Status.SUPERVISOR_APPROVE],
+                'change_url': change_url + Status.URL_SUFFIX[Status.SUPERVISOR_APPROVE]
+            })
+
+        if user.has_perm('%s.can_engineer_approve' % app_label):
+            self.children.append({
+                'title': Status.LABEL[Status.ENGINEER_APPROVE],
+                'change_url': change_url + Status.URL_SUFFIX[Status.ENGINEER_APPROVE]
+            })
+
+        if user.has_perm('%s.can_repair' % app_label):
+            self.children.append({
+                'title': Status.LABEL[Status.REPAIR],
+                'change_url': change_url + Status.URL_SUFFIX[Status.REPAIR]
+            })
+
+        if user.has_perm('%s.change_%s' % (app_label, inst_str.lower())):
+            self.children.append({
+                'title': _('query'),
+                'change_url': change_url + "query"
+            })
+            
+        # self.children += [{
+        #     'title': _('Parts Recycle'),
+        #     'change_url': change_url + 'draft/', 
+        #     'add_url': add_url
+        # }, {
+        #     'title': _('supervisor approve'),
+        #     'change_url': change_url + 'supervisorapprove/'
+        # }, {
+        #     'title': _('engineer approve'),
+        #     'change_url': change_url + 'engineerapprove/'
+        # }, {
+        #     'title': _('repaire'),
+        #     'change_url': change_url + 'repair/'
+        # }, {
+        #     'title': _('query'),
+        #     'change_url': change_url
+        # }]
         
         self._initialized = True
         
@@ -177,9 +214,20 @@ class CustomAppIndexDashboard(AppIndexDashboard):
     def __init__(self, *args, **kwargs):
         AppIndexDashboard.__init__(self, *args, **kwargs)
 
+        if self.app_title == 'Partsapp':
+            self.children.append(PartsRecycleModule())
+        else:
+            self.children.append(modules.ModelList(self.app_title, self.models))
+
+        self.children.append(modules.ModelList(
+            title=self.app_title,
+            models=['partsapp.*'],
+            exclude=['partsapp.models.PartsRecycle'] 
+        ))
+
         # append a model list module and a recent actions module
         self.children += [
-            modules.ModelList(self.app_title, self.models),
+            # modules.ModelList(self.app_title, self.models),
             modules.RecentActions(
                 _('Recent Actions'),
                 include_list=self.get_app_content_types(),

@@ -53,12 +53,15 @@ class Status(object):
     REPAIR = 3
     COMPLETED = 4
 
+    LABEL = (_('draft'), _('supervisor approve'), _('engineer approve'), _('repaire'), _('completed'))
+    URL_SUFFIX = ('draft', 'supervisorapprove', 'engineerapprove', 'repair', '')
+
     CHOICES = (
-        (DRAFT, _('draft')),
-        (SUPERVISOR_APPROVE, _('supervisor approve')),
-        (ENGINEER_APPROVE, _('engineer approve')),
-        (REPAIR, _('repaire')),
-        (COMPLETED, _('completed')), 
+        (DRAFT, LABEL[DRAFT]),
+        (SUPERVISOR_APPROVE, LABEL[SUPERVISOR_APPROVE]),
+        (ENGINEER_APPROVE, LABEL[ENGINEER_APPROVE]),
+        (REPAIR, LABEL[REPAIR]),
+        (COMPLETED, LABEL[COMPLETED]), 
     )
     
 SHIFT_CHOICES = (

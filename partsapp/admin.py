@@ -6,9 +6,11 @@ from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.admin.sites import site
 from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import models as auth
+from django.contrib.auth.decorators import permission_required
 from django.utils.translation import ugettext as _
 from fsm_admin.mixins import FSMTransitionMixin
 from partsapp.models import PartsRequest, RequestDetail, PartsRecycle, Status
+from partsapp.views import my_custom_permission_denied_view
 from dept.models import Employee
 
 
@@ -174,10 +176,12 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         urls = super(PartsRecycleAdmin, self).get_urls()
         print urls
         my_urls = [
-            url(r'^draft/$', self.changelist_view), 
-            url(r'^supervisorapprove/$', self.changelist_view), 
+            url(r'^draft/$', self.changlist_view_draft), 
+            url(r'^supervisorapprove/$', self.changelist_view_supervisorapprove), 
             url(r'^engineerapprove/$', self.changelist_view), 
             url(r'^repair/$', self.changelist_view), 
+            url(r'^query/$', self.changelist_view),
+            url(r'^permissiondenied/$', my_custom_permission_denied_view)
         ]
         return my_urls + urls
 
@@ -203,10 +207,20 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         elif '/repair/' in curr_url:
             return qs.filter(state=Status.REPAIR)
         else:
-            return qs
-        
-        
+            return qs.filter(state=Status.DRAFT)
 
+    # changelist views
+    def changlist_view_draft(self, request, extra_context=None):
+        return self.changelist_view(request, extra_context)
+
+    def changelist_view_supervisorapprove(self, request, extra_context=None):
+        @permission_required('partsapp.can_approve', login_url='/permissiondenied')
+        def _wrapper(request, extra_context):
+            return self.changelist_view(request, extra_context)
+        return _wrapper(request, extra_context)
+        
+        
+        
         
         
 # Register your models here.
