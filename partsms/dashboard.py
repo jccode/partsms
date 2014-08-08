@@ -48,11 +48,11 @@ class PartsRecycleModule(modules.DashboardModule, modules.AppListElementMixin):
         app_label = inst._meta.app_label
 
         # add children
-        draft_dict = {'title': _('Parts Recycle') }
+        draft_dict = {'title': Status.LABEL[Status.DRAFT] }
         if user.has_perm('%s.add_%s' % (app_label, inst_str.lower())):
             draft_dict['add_url'] = add_url
         if user.has_perm('%s.change_%s' % (app_label, inst_str.lower())):
-            draft_dict['change_url'] = change_url
+            draft_dict['change_url'] = change_url + Status.URL_SUFFIX[Status.DRAFT]
         if 'add_url' in draft_dict:
             self.children.append(draft_dict)
 

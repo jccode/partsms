@@ -11,10 +11,9 @@ urlpatterns = patterns(
     # url(r'^blog/', include('blog.urls')),
 
     # url(r'^admin/', include(admin.site.urls)),
+    url(r'', include(admin.site.urls)),    
     url(r'^admin_tools/', include('admin_tools.urls')),
-    url(r'', include(admin.site.urls)),
     url(r'^parts/', include('partsapp.urls')),
-    
 )
 
 

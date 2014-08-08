@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-08 01:22+0800\n"
-"PO-Revision-Date: 2014-08-08 01:23+0800\n"
+"POT-Creation-Date: 2014-08-08 15:48+0800\n"
+"PO-Revision-Date: 2014-08-08 15:49+0800\n"
 "Last-Translator: Jessie <junchang.chen@hgst.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: Chinese\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: admin.py:39 admin.py:41 admin.py:66 models.py:21
+#: admin.py:57 admin.py:59 admin.py:84 models.py:21
 msgid "Approver"
 msgstr "批准领用人"
 
-#: admin.py:56
+#: admin.py:74
 msgid "department"
 msgstr "部门"
 
-#: admin.py:60
+#: admin.py:78
 msgid "employee number"
 msgstr "工号"
 
@@ -106,24 +106,28 @@ msgid "Remark"
 msgstr "备注"
 
 #: models.py:56
-msgid "draft"
-msgstr "草稿"
+msgid "parts recycle"
+msgstr "备件回收"
 
-#: models.py:56
+#: models.py:56 models.py:61
 msgid "supervisor approve"
 msgstr "主管审批"
 
-#: models.py:56
+#: models.py:56 models.py:62
 msgid "engineer approve"
 msgstr "责任工程师审批"
 
-#: models.py:56
+#: models.py:56 models.py:63
 msgid "repaire"
 msgstr "维修"
 
-#: models.py:56
+#: models.py:56 models.py:64
 msgid "completed"
 msgstr "完成"
+
+#: models.py:60
+msgid "draft"
+msgstr "草稿"
 
 #: models.py:80
 msgid "Repaired"
@@ -248,6 +252,10 @@ msgstr "维修"
 #: models.py:156
 msgid "Stock In"
 msgstr "入库"
+
+#: utils.py:32
+msgid "query"
+msgstr ""
 
 #: templates/admin/partsapp/change_list.html:8
 #: templates/admin/partsapp/permission_denied.html:4

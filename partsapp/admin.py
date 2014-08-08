@@ -1,4 +1,5 @@
 import operator
+from functools import wraps
 from django.contrib import admin
 from django import forms
 from django.conf.urls import patterns, include, url
@@ -12,8 +13,25 @@ from django.utils.translation import ugettext as _
 from fsm_admin.mixins import FSMTransitionMixin
 from partsapp.models import PartsRequest, RequestDetail, PartsRecycle, Status
 from partsapp.views import permission_denied_view
+from partsapp import utils
 from dept.models import Employee
 
+
+def permisson_required_decorator(perm, login_url=None):
+    """
+    Helper decorator for permission_required check 
+    """
+    def real_decorator(func):
+        @wraps(func)
+        def wrapper(inst, request, extra_context=None, *args, **kwargs):
+            permission_denied_url = reverse('permission_denined_view')
+            _url = login_url if login_url else permission_denied_url
+            @permission_required(perm, login_url=_url)
+            def _wrapper(request, extra_context):
+                return func(inst, request, extra_context, *args, **kwargs)
+            return _wrapper(request, extra_context)
+        return wrapper
+    return real_decorator
 
 
 class RequestDetailInlineForm(forms.ModelForm):
@@ -91,18 +109,17 @@ class PartsRecycleChangeList(ChangeList):
         
     def get_queryset(self, request):
         qs = super(PartsRecycleChangeList, self).get_queryset(request)
-        curr_url = request.path
         
-        if '/query/' in curr_url:
+        if utils.is_draft_url(request):
+            return qs.filter(state = Status.DRAFT)
+        elif utils.is_supervisorapprove_url(request):
+            return qs.filter(state = Status.SUPERVISOR_APPROVE)
+        elif utils.is_engineerapprove_url(request):
+            return qs.filter(state = Status.ENGINEER_APPROVE)
+        elif utils.is_repair_url(request):
+            return qs.filter(state = Status.REPAIR)
+        elif utils.is_query_url(request):
             return qs
-        elif '/draft/' in curr_url:
-            return qs.filter(state=0)
-        elif '/supervisorapprove/' in curr_url:
-            return qs.filter(state=1)
-        elif '/engineerapprove/' in curr_url:
-            return qs.filter(state=2)
-        elif '/repair/' in curr_url:
-            return qs.filter(state=3)
         else:
             return qs
         
@@ -169,13 +186,7 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         return readonly_fields
 
     def get_urls(self):
-        """
-        
-        Arguments:
-        - `self`:
-        """
         urls = super(PartsRecycleAdmin, self).get_urls()
-        print urls
         my_urls = [
             url(r'^draft/$', self.changlist_view_draft), 
             url(r'^supervisorapprove/$', self.changelist_view_supervisorapprove), 
@@ -185,54 +196,60 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         ]
         return my_urls + urls
 
+    def get_list_filter(self, request):
+        if utils.is_query_url(request):
+            pass
+        return None
+        
+        
     # def get_changelist(self, request, **kwargs):
     #     return PartsRecycleChangeList
 
     def changelist_view(self, request, extra_context=None):
+        extra_context = {}
+        extra_context['menu_name'] = utils.get_status_url_label(request)
         return super(PartsRecycleAdmin, self).changelist_view(request, extra_context)
         
 
     def get_queryset(self, request):
         qs = super(PartsRecycleAdmin, self).get_queryset(request)
-        curr_url = request.path
         
-        if '/query/' in curr_url:
+        if utils.is_draft_url(request):
+            return qs.filter(state = Status.DRAFT)
+        elif utils.is_supervisorapprove_url(request):
+            return qs.filter(state = Status.SUPERVISOR_APPROVE)
+        elif utils.is_engineerapprove_url(request):
+            return qs.filter(state = Status.ENGINEER_APPROVE)
+        elif utils.is_repair_url(request):
+            return qs.filter(state = Status.REPAIR)
+        elif utils.is_query_url(request):
             return qs
-        elif '/draft/' in curr_url:
-            return qs.filter(state=Status.DRAFT)
-        elif '/supervisorapprove/' in curr_url:
-            return qs.filter(state=Status.SUPERVISOR_APPROVE)
-        elif '/engineerapprove/' in curr_url:
-            return qs.filter(state=Status.ENGINEER_APPROVE)
-        elif '/repair/' in curr_url:
-            return qs.filter(state=Status.REPAIR)
         else:
-            return qs.filter(state=Status.DRAFT)
+            return qs
 
     # changelist views
     def changlist_view_draft(self, request, extra_context=None):
         return self.changelist_view(request, extra_context)
 
+    @permisson_required_decorator('partsapp.can_approve')
     def changelist_view_supervisorapprove(self, request, extra_context=None):
-        permission_denied_url = reverse('permission_denined_view')
-        @permission_required('partsapp.can_approve', login_url=permission_denied_url)
-        def _wrapper(request, extra_context):
-            return self.changelist_view(request, extra_context)
-        return _wrapper(request, extra_context)
+        return self.changelist_view(request, extra_context)
         
+    @permisson_required_decorator('partsapp.can_engineer_approve')
     def changelist_view_engineer(self, request, extra_context=None):
-        @permission_required('partsapp.can_engineer_approve', login_url=reverse('permission_denined_view'))
-        def _wrapper(request, extra_context):
-            return self.changelist_view(request, extra_context)
-        return _wrapper(request, extra_context)
-        
+        return self.changelist_view(request, extra_context)
+
+    # same as above to view. 
     def changelist_view_repair(self, request, extra_context=None):
         @permission_required('partsapp.can_repair', login_url=reverse('permission_denined_view'))
         def _wrapper(request, extra_context):
             return self.changelist_view(request, extra_context)
         return _wrapper(request, extra_context)
         
-
+    
+  
+    
+        
         
 # Register your models here.
 admin.site.register(PartsRequest, RequestAdmin)
