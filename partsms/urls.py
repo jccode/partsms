@@ -13,7 +13,7 @@ urlpatterns = patterns(
     # url(r'^admin/', include(admin.site.urls)),
     url(r'', include(admin.site.urls)),    
     url(r'^admin_tools/', include('admin_tools.urls')),
-    url(r'^parts/', include('partsapp.urls')),
+    url(r'^parts/', include('partsrecycle.urls')),
 )
 
 

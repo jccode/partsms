@@ -17,7 +17,7 @@ from django.utils.importlib import import_module
 from admin_tools.dashboard import modules, Dashboard, AppIndexDashboard
 from admin_tools.utils import get_admin_site_name
 
-from partsapp.models import Status
+from partsrecycle.models import Status
 
 
 # Custom module for PartsRecycle
@@ -26,7 +26,7 @@ class PartsRecycleModule(modules.DashboardModule, modules.AppListElementMixin):
     Module for PartsRecycle model
     """
     template = 'admin_tools/dashboard/modules/model_list.html'
-    models = 'partsapp.models.PartsRecycle'
+    models = 'partsrecycle.models.PartsRecycle'
     
     def __init__(self, **kwargs):
         self.title = _('Parts Recycle')
@@ -179,15 +179,14 @@ class CustomIndexDashboard(Dashboard):
             ),
 
             modules.ModelList(
-                title=_('Applications'),
-                models=['partsapp.*'],
-                exclude=['partsapp.models.PartsRecycle'] 
+                title=_('General Parts Request'),
+                models=['partsrequest.*'],
             ), 
         ]
 
         # self.children.append(modules.ModelList(
         #     title =  _('Parts Recycle'),
-        #     models = ['partsapp.models.PartsRecycle'], 
+        #     models = ['partsrecycle.models.PartsRecycle'], 
         #     extra = [{
         #         'title': 'confirm parts',
         #         'change_url': 'http://www.baidu.com', 
@@ -214,12 +213,7 @@ class CustomAppIndexDashboard(AppIndexDashboard):
     def __init__(self, *args, **kwargs):
         AppIndexDashboard.__init__(self, *args, **kwargs)
 
-        if self.app_title == 'Partsapp':
-            self.children.append(modules.ModelList(
-                title=self.app_title,
-                models=['partsapp.*'],
-                exclude=['partsapp.models.PartsRecycle'] 
-            ))
+        if self.app_title == 'Partsrecycle':
             self.children.append(PartsRecycleModule())
             
         else:
@@ -228,7 +222,6 @@ class CustomAppIndexDashboard(AppIndexDashboard):
 
         # append a model list module and a recent actions module
         self.children += [
-            # modules.ModelList(self.app_title, self.models),
             modules.RecentActions(
                 _('Recent Actions'),
                 include_list=self.get_app_content_types(),

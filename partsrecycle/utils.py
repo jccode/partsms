@@ -1,6 +1,6 @@
 
 from django.utils.translation import ugettext as _
-from partsapp.models import Status
+from partsrecycle.models import Status
 
 
 def is_draft_url(request):

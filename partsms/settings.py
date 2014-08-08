@@ -46,7 +46,8 @@ INSTALLED_APPS = (
     'fsm_admin', 
 
     'dept', 
-    'partsapp', 
+    'partsrequest',
+    'partsrecycle', 
 )
 
 MIDDLEWARE_CLASSES = (
