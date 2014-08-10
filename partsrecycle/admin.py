@@ -1,4 +1,5 @@
 import operator
+import re
 from functools import wraps
 from django.contrib import admin
 from django import forms
@@ -12,7 +13,7 @@ from django.utils.translation import ugettext as _
 from fsm_admin.mixins import FSMTransitionMixin
 from partsrecycle.models import PartsRecycle, Status
 from partsrecycle.views import permission_denied_view
-from partsrecycle import utils
+from partsrecycle.utils import statusUrl
 
 
 def permisson_required_decorator(perm, login_url=None):
@@ -30,30 +31,7 @@ def permisson_required_decorator(perm, login_url=None):
             return _wrapper(request, extra_context)
         return wrapper
     return real_decorator
-
-
-class PartsRecycleChangeList(ChangeList):
-    
-    def __init__(self, *args):
-        super(PartsRecycleChangeList, self).__init__(*args)
-        
-    def get_queryset(self, request):
-        qs = super(PartsRecycleChangeList, self).get_queryset(request)
-        
-        if utils.is_draft_url(request):
-            return qs.filter(state = Status.DRAFT)
-        elif utils.is_supervisorapprove_url(request):
-            return qs.filter(state = Status.SUPERVISOR_APPROVE)
-        elif utils.is_engineerapprove_url(request):
-            return qs.filter(state = Status.ENGINEER_APPROVE)
-        elif utils.is_repair_url(request):
-            return qs.filter(state = Status.REPAIR)
-        elif utils.is_query_url(request):
-            return qs
-        else:
-            return qs
-        
-        
+ 
         
 class PartsRecycleForm(forms.ModelForm):
     pass
@@ -93,7 +71,6 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
 
     list_display = ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn', 'employee', 'shift',
                     'return_date', 'status_before_recycle', 'state')
-
     change_form_template = 'admin/partsrecycle/change_form_fsm_adm.html'
     change_list_template = 'admin/partsrecycle/change_list.html'
 
@@ -107,7 +84,6 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         }) for v in self._fields if v['status'] <= status ]
         return super(PartsRecycleAdmin, self).get_form(request, obj, **kwargs)
 
-
     def get_readonly_fields(self, request, obj=None):
         status = Status.DRAFT
         if obj:
@@ -116,57 +92,57 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         return readonly_fields
 
     def get_urls(self):
-        urls = super(PartsRecycleAdmin, self).get_urls()
+        """
         my_urls = [
-            url(r'^draft/$', self.changlist_view_draft), 
+            url(r'^draft/$', self.changelist_view_draft), 
             url(r'^supervisorapprove/$', self.changelist_view_supervisorapprove), 
-            url(r'^engineerapprove/$', self.changelist_view_engineer), 
-            url(r'^repair/$', self.changelist_view_repair), 
+            url(r'^engineerapprove/$', self.changelist_view_engineerapprove), 
+            url(r'^repair/$', self.changelist_view_repair),
             url(r'^query/$', self.changelist_view),
         ]
+        """
+        urls = super(PartsRecycleAdmin, self).get_urls()
+        url_suffixs = statusUrl.url_suffixs
+        my_urls = []
+        for url_suffix in url_suffixs:
+            my_urls.append(url( r'^'+url_suffix+'/$', getattr(self, 'changelist_view_'+url_suffix) ))
         return my_urls + urls
 
     def get_list_filter(self, request):
-        if utils.is_query_url(request):
+        if statusUrl.get_url_status(request) == statusUrl.STATUS_QUERY:
             pass
         return None
-        
         
     # def get_changelist(self, request, **kwargs):
     #     return PartsRecycleChangeList
 
     def changelist_view(self, request, extra_context=None):
         extra_context = {}
-        extra_context['menu_name'] = utils.get_status_url_label(request)
+        # extra_context['menu_name'] = utils.get_status_url_label(request)
+        extra_context['menu_name'] = statusUrl.get_url_menu_name(request)
         return super(PartsRecycleAdmin, self).changelist_view(request, extra_context)
         
-
     def get_queryset(self, request):
         qs = super(PartsRecycleAdmin, self).get_queryset(request)
-        
-        if utils.is_draft_url(request):
-            return qs.filter(state = Status.DRAFT)
-        elif utils.is_supervisorapprove_url(request):
-            return qs.filter(state = Status.SUPERVISOR_APPROVE)
-        elif utils.is_engineerapprove_url(request):
-            return qs.filter(state = Status.ENGINEER_APPROVE)
-        elif utils.is_repair_url(request):
-            return qs.filter(state = Status.REPAIR)
-        elif utils.is_query_url(request):
-            return qs
+        status = statusUrl.get_url_status(request)
+        if(status != -1 and status != statusUrl.STATUS_QUERY):
+            return qs.filter(state = status)
         else:
             return qs
 
     # changelist views
-    def changlist_view_draft(self, request, extra_context=None):
+    def changelist_view_draft(self, request, extra_context=None):
         return self.changelist_view(request, extra_context)
-
+        
+    def changelist_view_query(self, request, extra_context=None):
+        return self.changelist_view(request, extra_context)
+    
     @permisson_required_decorator('partsrecycle.can_approve')
     def changelist_view_supervisorapprove(self, request, extra_context=None):
         return self.changelist_view(request, extra_context)
         
     @permisson_required_decorator('partsrecycle.can_engineer_approve')
-    def changelist_view_engineer(self, request, extra_context=None):
+    def changelist_view_engineerapprove(self, request, extra_context=None):
         return self.changelist_view(request, extra_context)
 
     # same as above to view. 
@@ -175,12 +151,8 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         def _wrapper(request, extra_context):
             return self.changelist_view(request, extra_context)
         return _wrapper(request, extra_context)
-        
-    
-  
-    
-        
+
+
         
 # Register your models here.
-
 admin.site.register(PartsRecycle, PartsRecycleAdmin)
