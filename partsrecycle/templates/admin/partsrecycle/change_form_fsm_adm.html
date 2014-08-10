@@ -1,8 +1,20 @@
 {% extends 'admin/change_form.html' %}
-{% load fsm_admin %} 
+{% load fsm_admin partsrecycle_tags i18n admin_urls admin_static admin_modify %} 
 
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ app_label|capfirst|escape }}</a>
+&rsaquo; {% if has_change_permission %}<a href="{% url opts|status_urlname:status %}">{{ status|status_menu_name }}</a>{% else %}{{ opts.verbose_name_plural|capfirst }}{% endif %}
+&rsaquo; {% if add %}{% trans 'Add' %} {{ opts.verbose_name }}{% else %}{{ original|truncatewords:"18" }}{% endif %}
+</div>
+{% endblock %}
 
-{% block submit_buttons_bottom %}{% fsm_submit_row %}{% endblock %}
+{% block submit_buttons_bottom %}
+{% if status <= STATUS.REPAIR %}
+{% fsm_submit_row %}
+{% endif %}
+{% endblock %}
 
 {% block after_field_sets %}
     {{ block.super }}

@@ -33,6 +33,26 @@ def permisson_required_decorator(perm, login_url=None):
         return wrapper
     return real_decorator
 
+
+class PartsRecycleChangeList(ChangeList):
+    """
+    ChangeList for parts recycle
+    """
+    def __init__(self, request, *args):
+        self.url_status = statusUrl.get_url_status(request)
+        super(PartsRecycleChangeList, self).__init__(request, *args)
+
+    def url_for_result(self, result):
+        if self.url_status == -1:
+            return super(PartsRecycleChangeList, self).url_for_result(result)
+        else:
+            pk = getattr(result, self.pk_attname)
+            url_suffix = statusUrl.get_url_suffix_by_status(self.url_status)
+            url = reverse('admin:%s_%s_change_%s' % (self.opts.app_label, self.opts.model_name, url_suffix),
+                          args=(quote(pk), ),
+                          current_app=self.model_admin.admin_site.name)
+            return url
+        
     
 class PartsRecycleViewChangeList(ChangeList):
     """
@@ -43,9 +63,10 @@ class PartsRecycleViewChangeList(ChangeList):
 
     def url_for_result(self, result):
         pk = getattr(result, self.pk_attname)
-        return reverse('admin:%s_%s_change_view' % (self.opts.app_label, self.opts.model_name),
+        url = reverse('admin:%s_%s_change_view' % (self.opts.app_label, self.opts.model_name),
                        args=(quote(pk), ),
                        current_app=self.model_admin.admin_site.name)
+        return url
         
         
 class PartsRecycleForm(forms.ModelForm):
@@ -129,11 +150,14 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
             my_urls.append(url( r'^'+url_suffix+'/$',
                                 getattr(self, 'changelist_view_'+url_suffix), 
                                 name='%s_%s_changelist_%s' % (info + (url_suffix,))))
+            my_urls.append(url(r'^'+url_suffix+'/(.+)/$',
+                               self.change_view,
+                               name='%s_%s_change_%s' % (info + (url_suffix,))))            
         # for query view
-        query_url_suffix = statusUrl.get_url_suffix_by_status(statusUrl.STATUS_QUERY)
-        my_urls.append(url(r'^'+query_url_suffix+'/(.+)/$',
-                           self.change_view,
-                           name='%s_%s_change_view' % info))
+        # query_url_suffix = statusUrl.get_url_suffix_by_status(statusUrl.STATUS_QUERY)
+        # my_urls.append(url(r'^'+query_url_suffix+'/(.+)/$',
+        #                    self.change_view,
+        #                    name='%s_%s_change_view' % info))
         return my_urls + urls
 
     def get_list_filter(self, request):
@@ -147,17 +171,24 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         return super(PartsRecycleAdmin, self).get_actions(request)
         
     def get_changelist(self, request, **kwargs):
-        url_status = statusUrl.get_url_status(request)
-        if(url_status == statusUrl.STATUS_QUERY):
-            return PartsRecycleViewChangeList
-        else:
-            return super(PartsRecycleAdmin, self).get_changelist(request, **kwargs)
+        # url_status = statusUrl.get_url_status(request)
+        # if(url_status == statusUrl.STATUS_QUERY):
+        #     return PartsRecycleViewChangeList
+        # else:
+        #     return super(PartsRecycleAdmin, self).get_changelist(request, **kwargs)
+        return PartsRecycleChangeList
 
     def changelist_view(self, request, extra_context=None):
         extra_context = {}
         extra_context['status'] = statusUrl.get_url_status(request)
         extra_context['STATUS'] = Status
         return super(PartsRecycleAdmin, self).changelist_view(request, extra_context)
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        extra_context = {}
+        extra_context['status'] = statusUrl.get_url_status(request)
+        extra_context['STATUS'] = Status
+        return super(PartsRecycleAdmin, self).change_view(request, object_id, form_url, extra_context)
         
     def get_queryset(self, request):
         qs = super(PartsRecycleAdmin, self).get_queryset(request)
