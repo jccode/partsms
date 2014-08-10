@@ -77,6 +77,12 @@ class StatusURL(object):
         else:
             return self._get_sturl_item_by_status(status)['menu_name']
 
+    def get_menu_name_by_status(self, status):
+        return self._get_sturl_item_by_status(status)['menu_name']
+        
+    def get_url_suffix_by_status(self, status):
+        return self._get_sturl_item_by_status(status)['url_suffix']
+        
 
 statusUrl = StatusURL()
 

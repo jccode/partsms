@@ -6,6 +6,7 @@ from django import forms
 from django.conf.urls import patterns, include, url
 from django.core.urlresolvers import reverse
 from django.contrib.admin.sites import site
+from django.contrib.admin.util import quote
 from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import models as auth
 from django.contrib.auth.decorators import permission_required
@@ -31,7 +32,21 @@ def permisson_required_decorator(perm, login_url=None):
             return _wrapper(request, extra_context)
         return wrapper
     return real_decorator
- 
+
+    
+class PartsRecycleViewChangeList(ChangeList):
+    """
+    ChangeList for query view
+    """
+    def __init__(self, *args):
+        super(PartsRecycleViewChangeList, self).__init__(*args)        
+
+    def url_for_result(self, result):
+        pk = getattr(result, self.pk_attname)
+        return reverse('admin:%s_%s_change_view' % (self.opts.app_label, self.opts.model_name),
+                       args=(quote(pk), ),
+                       current_app=self.model_admin.admin_site.name)
+        
         
 class PartsRecycleForm(forms.ModelForm):
     pass
@@ -85,9 +100,13 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         return super(PartsRecycleAdmin, self).get_form(request, obj, **kwargs)
 
     def get_readonly_fields(self, request, obj=None):
-        status = Status.DRAFT
-        if obj:
+        url_status = statusUrl.get_url_status(request)
+        if url_status == statusUrl.STATUS_QUERY:
+            status = statusUrl.STATUS_QUERY
+        elif obj:
             status = obj.state
+        else:
+            status = Status.DRAFT
         readonly_fields = reduce(operator.add, [ v['fields'] for v in self._fields if v['status'] < status ], ())
         return readonly_fields
 
@@ -99,27 +118,45 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
             url(r'^engineerapprove/$', self.changelist_view_engineerapprove), 
             url(r'^repair/$', self.changelist_view_repair),
             url(r'^query/$', self.changelist_view),
+            url(r'query/(.+)/$', self.change_view), 
         ]
         """
         urls = super(PartsRecycleAdmin, self).get_urls()
         url_suffixs = statusUrl.url_suffixs
+        info = (self.model._meta.app_label, self.model._meta.model_name)
         my_urls = []
         for url_suffix in url_suffixs:
-            my_urls.append(url( r'^'+url_suffix+'/$', getattr(self, 'changelist_view_'+url_suffix) ))
+            my_urls.append(url( r'^'+url_suffix+'/$',
+                                getattr(self, 'changelist_view_'+url_suffix), 
+                                name='%s_%s_changelist_%s' % (info + (url_suffix,))))
+        # for query view
+        query_url_suffix = statusUrl.get_url_suffix_by_status(statusUrl.STATUS_QUERY)
+        my_urls.append(url(r'^'+query_url_suffix+'/(.+)/$',
+                           self.change_view,
+                           name='%s_%s_change_view' % info))
         return my_urls + urls
 
     def get_list_filter(self, request):
         if statusUrl.get_url_status(request) == statusUrl.STATUS_QUERY:
-            pass
+            return ('state', )
         return None
+
+    def get_actions(self, request):
+        if statusUrl.get_url_status(request) != Status.DRAFT:
+            return None
+        return super(PartsRecycleAdmin, self).get_actions(request)
         
-    # def get_changelist(self, request, **kwargs):
-    #     return PartsRecycleChangeList
+    def get_changelist(self, request, **kwargs):
+        url_status = statusUrl.get_url_status(request)
+        if(url_status == statusUrl.STATUS_QUERY):
+            return PartsRecycleViewChangeList
+        else:
+            return super(PartsRecycleAdmin, self).get_changelist(request, **kwargs)
 
     def changelist_view(self, request, extra_context=None):
         extra_context = {}
-        # extra_context['menu_name'] = utils.get_status_url_label(request)
-        extra_context['menu_name'] = statusUrl.get_url_menu_name(request)
+        extra_context['status'] = statusUrl.get_url_status(request)
+        extra_context['STATUS'] = Status
         return super(PartsRecycleAdmin, self).changelist_view(request, extra_context)
         
     def get_queryset(self, request):
@@ -136,6 +173,7 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         
     def changelist_view_query(self, request, extra_context=None):
         return self.changelist_view(request, extra_context)
+        # return PartsRecycleViewChangeList(request, extra_context)
     
     @permisson_required_decorator('partsrecycle.can_approve')
     def changelist_view_supervisorapprove(self, request, extra_context=None):
@@ -151,7 +189,6 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         def _wrapper(request, extra_context):
             return self.changelist_view(request, extra_context)
         return _wrapper(request, extra_context)
-
 
         
 # Register your models here.
