@@ -20,9 +20,6 @@ class Status(object):
     REPAIR = 3
     COMPLETED = 4
 
-    LABEL = (_('parts recycle'), _('supervisor approve'), _('engineer approve'), _('repaire'), _('completed'))
-    URL_SUFFIX = ('draft', 'supervisorapprove', 'engineerapprove', 'repair', '')
-
     CHOICES = (
         (DRAFT, _('draft')),
         (SUPERVISOR_APPROVE, _('supervisor approve')),

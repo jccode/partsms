@@ -54,23 +54,8 @@ class PartsRecycleChangeList(ChangeList):
                           args=(quote(pk), ),
                           current_app=self.model_admin.admin_site.name)
             return url
-        
-    
-class PartsRecycleViewChangeList(ChangeList):
-    """
-    ChangeList for query view
-    """
-    def __init__(self, *args):
-        super(PartsRecycleViewChangeList, self).__init__(*args)        
 
-    def url_for_result(self, result):
-        pk = getattr(result, self.pk_attname)
-        url = reverse('admin:%s_%s_change_view' % (self.opts.app_label, self.opts.model_name),
-                       args=(quote(pk), ),
-                       current_app=self.model_admin.admin_site.name)
-        return url
-        
-        
+            
 class PartsRecycleForm(forms.ModelForm):
     pass
 
@@ -201,7 +186,6 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         return super(PartsRecycleAdmin, self).add_view(request, form_url, extra_context)
 
     def history_view(self, request, object_id, extra_context=None):
-        print '----' + str(object_id)
         extra_context = self._populate_status_to_extra_context(request, extra_context)
         return super(PartsRecycleAdmin, self).history_view(request, object_id, extra_context)
         
@@ -219,7 +203,6 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         
     def changelist_view_query(self, request, extra_context=None):
         return self.changelist_view(request, extra_context)
-        # return PartsRecycleViewChangeList(request, extra_context)
     
     @permisson_required_decorator('partsrecycle.can_approve')
     def changelist_view_supervisorapprove(self, request, extra_context=None):
