@@ -17,8 +17,14 @@ def status_menu_name(status):
     
 @register.filter
 def status_urlname(value, arg):
-    print '-----'
-    print arg
     url_suffix = statusUrl.get_url_suffix_by_status(arg)
-    print url_suffix
     return 'admin:%s_%s_changelist_%s' % (value.app_label, value.model_name, url_suffix)
+
+@register.filter
+def status_urlname(value, arg):
+    if arg == -1:
+        return value
+    else:
+        url_suffix = statusUrl.get_url_suffix_by_status(arg)
+        return value + "_" + url_suffix
+    
