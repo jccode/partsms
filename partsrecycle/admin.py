@@ -2,6 +2,7 @@ import operator
 import re
 from functools import wraps
 from django.contrib import admin
+from django.contrib import messages
 from django import forms
 from django.conf.urls import patterns, include, url
 from django.core.urlresolvers import reverse
@@ -13,6 +14,7 @@ from django.contrib.auth import models as auth
 from django.contrib.auth.decorators import permission_required
 from django.http import Http404, HttpResponseRedirect
 from django.utils.translation import ugettext as _
+from django.utils.encoding import force_text
 from fsm_admin.mixins import FSMTransitionMixin
 from partsrecycle.models import PartsRecycle, Status
 from partsrecycle.views import permission_denied_view
@@ -261,21 +263,68 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         """
         if post_url_continue == None:
             status = statusUrl.get_url_status(request)
+            url_suffix = statusUrl.get_url_suffix_by_status(status) if status != -1 else None
             opts = obj._meta
             pk_value = obj._get_pk_val()
-            if status == -1:
-                post_url_continue = reverse('admin:%s_%s_change' %
-                                            (opts.app_label, opts.model_name),
-                                            args=(pk_value,),
-                                            current_app=self.admin_site.name)
-            else:
-                url_suffix = statusUrl.get_url_suffix_by_status(status)
-                post_url_continue = reverse('admin:%s_%s_change_%s' %
-                                            (opts.app_label, opts.model_name, url_suffix),
-                                            args=(pk_value,),
-                                            current_app=self.admin_site.name)
+
+            url_name = 'admin:%s_%s_change' % (opts.app_label, opts.model_name) \
+                       if status == -1 else \
+                          'admin:%s_%s_change_%s' % (opts.app_label, opts.model_name, url_suffix)
+            # if status == -1:
+            #     post_url_continue = reverse('admin:%s_%s_change' %
+            #                                 (opts.app_label, opts.model_name),
+            #                                 args=(pk_value,),
+            #                                 current_app=self.admin_site.name)
+            # else:
+            #     url_suffix = statusUrl.get_url_suffix_by_status(status)
+            #     post_url_continue = reverse('admin:%s_%s_change_%s' %
+            #                                 (opts.app_label, opts.model_name, url_suffix),
+            #                                 args=(pk_value,),
+            #                                 current_app=self.admin_site.name)
+            post_url_continue = reverse(url_name,
+                                        args=(pk_value,),
+                                        current_app=self.admin_site.name)            
         return super(PartsRecycleAdmin, self).response_add(request, obj, post_url_continue)
 
+    def response_change(self, request, obj):
+        """
+        Override FSMTransitionMixin response_change() function. 
+        To handle '_saveasnew' & '_addanother' button redirection
+        """
+        opts = self.model._meta
+        pk_value = obj._get_pk_val()
+        preserved_filters = self.get_preserved_filters(request)
+        msg_dict = {'name': force_text(opts.verbose_name), 'obj': force_text(obj)}
+
+        status = statusUrl.get_url_status(request)
+        url_suffix = statusUrl.get_url_suffix_by_status(status) if status != -1 else None
+        
+        if '_partsrecycle_saveasnew' in request.POST:
+            msg = _('The %(name)s "%(obj)s" was added successfully. You may edit it again below.') % msg_dict
+            self.message_user(request, msg, messages.SUCCESS)
+            url_name = 'admin:%s_%s_change' % (opts.app_label, opts.model_name) \
+                       if status == -1 else \
+                          'admin:%s_%s_change_%s' % (opts.app_label, opts.model_name, url_suffix)
+            redirect_url = reverse(url_name,
+                                   args=(pk_value,),
+                                   current_app=self.admin_site.name)
+            redirect_url = add_preserved_filters({'preserved_filters': preserved_filters, 'opts': opts}, redirect_url)
+            return HttpResponseRedirect(redirect_url)
+            
+        elif '_partsrecycle_addanother' in request.POST:
+            msg = _('The %(name)s "%(obj)s" was changed successfully. You may add another %(name)s below.') % msg_dict
+            self.message_user(request, msg, messages.SUCCESS)
+            url_name = 'admin:%s_%s_add' % (opts.app_label, opts.model_name) \
+                       if status == -1 else \
+                          'admin:%s_%s_add_%s' % (opts.app_label, opts.model_name, url_suffix)
+            redirect_url = reverse(url_name,
+                                   current_app=self.admin_site.name)
+            redirect_url = add_preserved_filters({'preserved_filters': preserved_filters, 'opts': opts}, redirect_url)
+            return HttpResponseRedirect(redirect_url)
+            
+        else:
+            return super(PartsRecycleAdmin, self).response_change(request, obj)
+            
 
 # Register your models here.
 admin.site.register(PartsRecycle, PartsRecycleAdmin)

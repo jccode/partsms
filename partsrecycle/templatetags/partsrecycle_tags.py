@@ -1,6 +1,7 @@
 
 from django import template
 from django.template.defaultfilters import stringfilter
+from fsm_admin.templatetags.fsm_admin import fsm_submit_row
 from partsrecycle.utils import statusUrl
 
 register = template.Library()
@@ -27,4 +28,14 @@ def status_urlname(value, arg):
     else:
         url_suffix = statusUrl.get_url_suffix_by_status(arg)
         return value + "_" + url_suffix
+
+@register.inclusion_tag('admin/partsrecycle/fsm_submit_line.html', takes_context=True)
+def fsm_submit_row2(context):
+    """
+    Override fsm_admin fsm_submit_row tag, to use a custom template
+    """
+    ctx = fsm_submit_row(context)
+    ctx['status'] = context['status']
+    ctx['STATUS'] = context['STATUS']
+    return ctx
     
