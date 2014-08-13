@@ -115,8 +115,15 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'), 
 )
 
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'), 
+)
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'), 
+)
 
 ADMIN_TOOLS_INDEX_DASHBOARD = 'partsms.dashboard.CustomIndexDashboard'
 ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'partsms.dashboard.CustomAppIndexDashboard'
-
+ADMIN_TOOLS_MENU = 'partsms.menu.CustomMenu'
+# ADMIN_TOOLS_THEMING_CSS = 'admin_tools/css/theming.css'

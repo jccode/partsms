@@ -68,9 +68,9 @@ class RequestAdmin(admin.ModelAdmin):
         
     class Media:
         css = {
-            "all": ("partsapp/css/parts_request.css", )
+            "all": ("partsrequest/css/parts_request.css", )
         }
-        js = ("partsapp/js/parts_request.js", )
+        js = ("partsrequest/js/parts_request.js", )
         
 
 

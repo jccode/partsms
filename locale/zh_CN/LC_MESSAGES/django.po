@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-06 17:31+0800\n"
-"PO-Revision-Date: 2014-08-06 17:35+0800\n"
+"POT-Creation-Date: 2014-08-13 10:16+0800\n"
+"PO-Revision-Date: 2014-08-13 10:20+0800\n"
 "Last-Translator: Jessie <junchang.chen@hgst.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: Chinese\n"
@@ -18,11 +18,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: dept/admin.py:19 partsapp/admin.py:57
+#: dept/admin.py:19 partsrequest/admin.py:50
 msgid "employee number"
 msgstr ""
 
-#: dept/admin.py:23 dept/models.py:17 dept/models.py:24 partsapp/admin.py:53
+#: dept/admin.py:23 dept/models.py:17 dept/models.py:24
+#: partsrequest/admin.py:46
 msgid "department"
 msgstr ""
 
@@ -50,6 +51,65 @@ msgstr ""
 
 #: dept/models.py:33
 msgid "employees"
+msgstr ""
+
+#: env/lib/python2.7/site-packages/fsm_submit_line.html:5
+#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/pagination.html:11
+#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/submit_line.html:3
+#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line.html:3
+#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:5
+#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line.html:3
+#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:5
+#: partsrecycle/templates/admin/partsrecycle/fsm_submit_line.html:4
+#: partsrecycle/templates/fsm_admin/fsm_submit_line.html:4
+msgid "Save"
+msgstr ""
+
+#: env/lib/python2.7/site-packages/fsm_submit_line.html:8
+#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/delete_confirmation.html:10
+#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/submit_line.html:6
+#: env/lib/python2.7/site-packages/django/forms/formsets.py:354
+#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line.html:6
+#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:4
+#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line.html:6
+#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:4
+#: partsrecycle/templates/admin/partsrecycle/fsm_submit_line.html:7
+#: partsrecycle/templates/fsm_admin/fsm_submit_line.html:7
+msgid "Delete"
+msgstr ""
+
+#: env/lib/python2.7/site-packages/fsm_submit_line.html:11
+#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/submit_line.html:8
+#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line.html:9
+#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:6
+#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line.html:9
+#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:6
+#: partsrecycle/templates/admin/partsrecycle/fsm_submit_line.html:10
+#: partsrecycle/templates/fsm_admin/fsm_submit_line.html:10
+msgid "Save as new"
+msgstr ""
+
+#: env/lib/python2.7/site-packages/fsm_submit_line.html:12
+#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/submit_line.html:9
+#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line.html:10
+#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:7
+#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line.html:10
+#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:7
+#: partsrecycle/templates/admin/partsrecycle/fsm_submit_line.html:13
+#: partsrecycle/templates/admin/partsrecycle/fsm_submit_line.html:15
+#: partsrecycle/templates/fsm_admin/fsm_submit_line.html:11
+msgid "Save and add another"
+msgstr ""
+
+#: env/lib/python2.7/site-packages/fsm_submit_line.html:13
+#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/submit_line.html:10
+#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line.html:11
+#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:8
+#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line.html:11
+#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:8
+#: partsrecycle/templates/admin/partsrecycle/fsm_submit_line.html:18
+#: partsrecycle/templates/fsm_admin/fsm_submit_line.html:12
+msgid "Save and continue editing"
 msgstr ""
 
 #: env/lib/python2.7/site-packages/admin_tools/dashboard/dashboards.py:86
@@ -93,7 +153,6 @@ msgstr ""
 #: env/lib/python2.7/site-packages/admin_tools/menu/menus.py:103
 #: env/lib/python2.7/site-packages/test_proj/dashboard.py:34
 #: env/lib/python2.7/site-packages/test_proj/menu.py:19
-#: partsms/dashboard.py:145
 msgid "Applications"
 msgstr ""
 
@@ -109,7 +168,7 @@ msgstr ""
 #: env/lib/python2.7/site-packages/admin_tools/dashboard/modules.py:592
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/index.html:57
 #: env/lib/python2.7/site-packages/test_proj/dashboard.py:52
-#: partsms/dashboard.py:165 partsms/dashboard.py:184
+#: partsms/dashboard.py:110 partsms/dashboard.py:131
 msgid "Recent Actions"
 msgstr ""
 
@@ -178,6 +237,10 @@ msgstr ""
 #: env/lib/python2.7/site-packages/django/contrib/admindocs/templates/admin_doc/template_tag_index.html:7
 #: env/lib/python2.7/site-packages/django/contrib/admindocs/templates/admin_doc/view_detail.html:6
 #: env/lib/python2.7/site-packages/django/contrib/admindocs/templates/admin_doc/view_index.html:7
+#: partsrecycle/templates/admin/partsrecycle/change_form.html:6
+#: partsrecycle/templates/admin/partsrecycle/change_list.html:7
+#: partsrecycle/templates/admin/partsrecycle/object_history.html:6
+#: partsrecycle/templates/admin/partsrecycle/permission_denied.html:4
 msgid "Home"
 msgstr ""
 
@@ -189,6 +252,7 @@ msgstr ""
 #: env/lib/python2.7/site-packages/admin_tools/dashboard/templates/admin_tools/dashboard/modules/model_list.html:11
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/change_form.html:21
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/index.html:33
+#: partsrecycle/templates/admin/partsrecycle/change_form.html:22
 msgid "Add"
 msgstr ""
 
@@ -729,6 +793,7 @@ msgstr ""
 
 #: env/lib/python2.7/site-packages/django/contrib/admin/options.py:934
 #: env/lib/python2.7/site-packages/django/contrib/admin/options.py:973
+#: partsrecycle/admin.py:303
 #, python-format
 msgid ""
 "The %(name)s \"%(obj)s\" was added successfully. You may edit it again below."
@@ -754,6 +819,7 @@ msgid ""
 msgstr ""
 
 #: env/lib/python2.7/site-packages/django/contrib/admin/options.py:983
+#: partsrecycle/admin.py:315
 #, python-format
 msgid ""
 "The %(name)s \"%(obj)s\" was changed successfully. You may add another "
@@ -935,12 +1001,15 @@ msgstr ""
 
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/change_form.html:33
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/object_history.html:10
+#: partsrecycle/templates/admin/partsrecycle/change_form.html:29
+#: partsrecycle/templates/admin/partsrecycle/object_history.html:10
 msgid "History"
 msgstr ""
 
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/change_form.html:35
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/edit_inline/stacked.html:9
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/edit_inline/tabular.html:30
+#: partsrecycle/templates/admin/partsrecycle/change_form.html:31
 msgid "View on site"
 msgstr ""
 
@@ -961,6 +1030,7 @@ msgid "Please correct the errors below."
 msgstr ""
 
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/change_list.html:58
+#: partsrecycle/templates/admin/partsrecycle/change_list.html:25
 #, python-format
 msgid "Add %(name)s"
 msgstr ""
@@ -980,16 +1050,6 @@ msgstr ""
 
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/change_list_results.html:19
 msgid "Toggle sorting"
-msgstr ""
-
-#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/delete_confirmation.html:10
-#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/submit_line.html:6
-#: env/lib/python2.7/site-packages/django/forms/formsets.py:354
-#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line.html:6
-#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:4
-#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line.html:6
-#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:4
-msgid "Delete"
 msgstr ""
 
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/delete_confirmation.html:17
@@ -1108,15 +1168,6 @@ msgstr ""
 msgid "Show all"
 msgstr ""
 
-#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/pagination.html:11
-#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/submit_line.html:3
-#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line.html:3
-#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:5
-#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line.html:3
-#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:5
-msgid "Save"
-msgstr ""
-
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/search_form.html:7
 msgid "Search"
 msgstr ""
@@ -1131,30 +1182,6 @@ msgstr[1] ""
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/search_form.html:9
 #, python-format
 msgid "%(full_result_count)s total"
-msgstr ""
-
-#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/submit_line.html:8
-#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line.html:9
-#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:6
-#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line.html:9
-#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:6
-msgid "Save as new"
-msgstr ""
-
-#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/submit_line.html:9
-#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line.html:10
-#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:7
-#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line.html:10
-#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:7
-msgid "Save and add another"
-msgstr ""
-
-#: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/submit_line.html:10
-#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line.html:11
-#: env/lib/python2.7/site-packages/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:8
-#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line.html:11
-#: env/pkg_src/django-fsm-admin/fsm_admin/templates/fsm_admin/fsm_submit_line_grappelli.html:8
-msgid "Save and continue editing"
 msgstr ""
 
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/admin/auth/user/add_form.html:6
@@ -1212,6 +1239,7 @@ msgid "Thanks for spending some quality time with the Web site today."
 msgstr ""
 
 #: env/lib/python2.7/site-packages/django/contrib/admin/templates/registration/logged_out.html:10
+#: partsrecycle/templates/admin/partsrecycle/permission_denied.html:10
 msgid "Log in again"
 msgstr ""
 
@@ -1585,7 +1613,7 @@ msgid "Type"
 msgstr ""
 
 #: env/lib/python2.7/site-packages/django/contrib/admindocs/templates/admin_doc/model_detail.html:37
-#: partsapp/models.py:96
+#: partsrecycle/models.py:63
 msgid "Description"
 msgstr ""
 
@@ -4404,228 +4432,242 @@ msgstr ""
 msgid "Text nodes have no children"
 msgstr ""
 
-#: partsapp/admin.py:36 partsapp/admin.py:38 partsapp/admin.py:63
-#: partsapp/models.py:21
-msgid "Approver"
-msgstr ""
-
-#: partsapp/models.py:13 partsapp/models.py:83
-msgid "Request number"
-msgstr ""
-
-#: partsapp/models.py:14
-msgid "Apply type"
-msgstr ""
-
-#: partsapp/models.py:15
-msgid "Material type"
-msgstr ""
-
-#: partsapp/models.py:16
-msgid "Apply reason"
-msgstr ""
-
-#: partsapp/models.py:17
-msgid "Employee"
-msgstr ""
-
-#: partsapp/models.py:18
-msgid "Cost center"
-msgstr ""
-
-#: partsapp/models.py:22
-msgid "Request Date"
-msgstr ""
-
-#: partsapp/models.py:28
-msgid "General Parts Request"
-msgstr ""
-
-#: partsapp/models.py:29
-msgid "General Parts Requests"
-msgstr ""
-
-#: partsapp/models.py:33 partsapp/models.py:85
-msgid "P/N"
-msgstr ""
-
-#: partsapp/models.py:34
-msgid "Bin"
-msgstr ""
-
-#: partsapp/models.py:35
-msgid "Parts name"
-msgstr ""
-
-#: partsapp/models.py:36
-msgid "Quantity"
-msgstr ""
-
-#: partsapp/models.py:37
-msgid "Actual Qty"
-msgstr ""
-
-#: partsapp/models.py:38
-msgid "Unit"
-msgstr ""
-
-#: partsapp/models.py:39
-msgid "Over Plan Usage"
-msgstr ""
-
-#: partsapp/models.py:40
-msgid "Balance"
-msgstr ""
-
-#: partsapp/models.py:41
-msgid "Usage by once"
-msgstr ""
-
-#: partsapp/models.py:42 partsapp/models.py:101 partsapp/models.py:107
-#: partsapp/models.py:111
-msgid "Remark"
-msgstr ""
-
-#: partsapp/models.py:57
-msgid "draft"
-msgstr ""
-
-#: partsapp/models.py:58 partsms/dashboard.py:51
-msgid "supervisor approve"
-msgstr ""
-
-#: partsapp/models.py:59 partsms/dashboard.py:54
-msgid "engineer approve"
-msgstr ""
-
-#: partsapp/models.py:60 partsms/dashboard.py:57
-msgid "repaire"
-msgstr ""
-
-#: partsapp/models.py:61
-msgid "completed"
-msgstr ""
-
-#: partsapp/models.py:77
-msgid "Repaired"
-msgstr ""
-
-#: partsapp/models.py:78
-msgid "Scrapped"
-msgstr ""
-
-#: partsapp/models.py:79
-msgid "Engineering material"
-msgstr ""
-
-#: partsapp/models.py:84
-msgid "Parts"
-msgstr ""
-
-#: partsapp/models.py:86
-msgid "SN"
-msgstr ""
-
-#: partsapp/models.py:87
-msgid "Tool"
-msgstr ""
-
-#: partsapp/models.py:88
-msgid "STN"
-msgstr ""
-
-#: partsapp/models.py:90
-msgid "Recycler"
-msgstr ""
-
-#: partsapp/models.py:91
-msgid "Supervisor"
-msgstr ""
-
-#: partsapp/models.py:92
-msgid "Manager"
-msgstr ""
-
-#: partsapp/models.py:93
-msgid "Shift"
-msgstr ""
-
-#: partsapp/models.py:94
-msgid "Return Date"
-msgstr ""
-
-#: partsapp/models.py:95
-msgid "Status before recycle"
-msgstr ""
-
-#: partsapp/models.py:98 partsapp/models.py:103
-msgid "Confirmmer"
-msgstr ""
-
-#: partsapp/models.py:99 partsapp/models.py:104
-msgid "Approve Date"
-msgstr ""
-
-#: partsapp/models.py:100
-msgid "Confirm result"
-msgstr ""
-
-#: partsapp/models.py:105
-msgid "Repairable"
-msgstr ""
-
-#: partsapp/models.py:106
-msgid "Status"
-msgstr ""
-
-#: partsapp/models.py:109
-msgid "Repairer"
-msgstr ""
-
-#: partsapp/models.py:110
-msgid "Repaired Date"
-msgstr ""
-
-#: partsapp/models.py:112
-msgid "Status after repaired"
-msgstr ""
-
-#: partsapp/models.py:114
-msgid "Store Date"
-msgstr ""
-
-#: partsapp/models.py:115
-msgid "Store in number"
-msgstr ""
-
-#: partsapp/models.py:117
-msgid "State"
-msgstr ""
-
-#: partsapp/models.py:121 partsms/dashboard.py:30 partsms/dashboard.py:47
+#: partsms/dashboard.py:30 partsrecycle/models.py:88
 msgid "Parts Recycle"
 msgstr ""
 
-#: partsapp/models.py:122
+#: partsms/dashboard.py:104 partsrequest/models.py:26
+msgid "General Parts Request"
+msgstr ""
+
+#: partsrecycle/models.py:24
+msgid "draft"
+msgstr ""
+
+#: partsrecycle/models.py:25 partsrecycle/utils.py:17
+msgid "supervisor approve"
+msgstr ""
+
+#: partsrecycle/models.py:26 partsrecycle/utils.py:22
+msgid "engineer approve"
+msgstr ""
+
+#: partsrecycle/models.py:27 partsrecycle/utils.py:27
+msgid "repaire"
+msgstr ""
+
+#: partsrecycle/models.py:28
+msgid "completed"
+msgstr ""
+
+#: partsrecycle/models.py:44
+msgid "Repaired"
+msgstr ""
+
+#: partsrecycle/models.py:45
+msgid "Scrapped"
+msgstr ""
+
+#: partsrecycle/models.py:46
+msgid "Engineering material"
+msgstr ""
+
+#: partsrecycle/models.py:50 partsrequest/models.py:11
+msgid "Request number"
+msgstr ""
+
+#: partsrecycle/models.py:51
+msgid "Parts"
+msgstr ""
+
+#: partsrecycle/models.py:52 partsrequest/models.py:31
+msgid "P/N"
+msgstr ""
+
+#: partsrecycle/models.py:53
+msgid "SN"
+msgstr ""
+
+#: partsrecycle/models.py:54
+msgid "Tool"
+msgstr ""
+
+#: partsrecycle/models.py:55
+msgid "STN"
+msgstr ""
+
+#: partsrecycle/models.py:57
+msgid "Recycler"
+msgstr ""
+
+#: partsrecycle/models.py:58
+msgid "Supervisor"
+msgstr ""
+
+#: partsrecycle/models.py:59
+msgid "Manager"
+msgstr ""
+
+#: partsrecycle/models.py:60
+msgid "Shift"
+msgstr ""
+
+#: partsrecycle/models.py:61
+msgid "Return Date"
+msgstr ""
+
+#: partsrecycle/models.py:62
+msgid "Status before recycle"
+msgstr ""
+
+#: partsrecycle/models.py:65 partsrecycle/models.py:70
+msgid "Confirmmer"
+msgstr ""
+
+#: partsrecycle/models.py:66 partsrecycle/models.py:71
+msgid "Approve Date"
+msgstr ""
+
+#: partsrecycle/models.py:67
+msgid "Confirm result"
+msgstr ""
+
+#: partsrecycle/models.py:68 partsrecycle/models.py:74
+#: partsrecycle/models.py:78 partsrequest/models.py:40
+msgid "Remark"
+msgstr ""
+
+#: partsrecycle/models.py:72
+msgid "Repairable"
+msgstr ""
+
+#: partsrecycle/models.py:73
+msgid "Status"
+msgstr ""
+
+#: partsrecycle/models.py:76
+msgid "Repairer"
+msgstr ""
+
+#: partsrecycle/models.py:77
+msgid "Repaired Date"
+msgstr ""
+
+#: partsrecycle/models.py:79
+msgid "Status after repaired"
+msgstr ""
+
+#: partsrecycle/models.py:81
+msgid "Store Date"
+msgstr ""
+
+#: partsrecycle/models.py:82
+msgid "Store in number"
+msgstr ""
+
+#: partsrecycle/models.py:84
+msgid "State"
+msgstr ""
+
+#: partsrecycle/models.py:89
 msgid "Parts Recycles"
 msgstr ""
 
-#: partsapp/models.py:138
+#: partsrecycle/models.py:105
 msgid "Supervisor Approve"
 msgstr ""
 
-#: partsapp/models.py:143
+#: partsrecycle/models.py:110
 msgid "Engineer Approve"
 msgstr ""
 
-#: partsapp/models.py:148
+#: partsrecycle/models.py:115
 msgid "Repair"
 msgstr ""
 
-#: partsapp/models.py:153
+#: partsrecycle/models.py:120
 msgid "Stock In"
 msgstr ""
 
-#: partsms/dashboard.py:60
+#: partsrecycle/utils.py:12
+msgid "parts recycle"
+msgstr ""
+
+#: partsrecycle/utils.py:32
 msgid "query"
 msgstr "查询"
+
+#: partsrecycle/templates/admin/partsrecycle/permission_denied.html:8
+msgid ""
+"Permission denied. You haven't been granted to view this page. Please turn "
+"to index page or re-login again."
+msgstr ""
+
+#: partsrequest/admin.py:30 partsrequest/admin.py:32 partsrequest/admin.py:56
+#: partsrequest/models.py:19
+msgid "Approver"
+msgstr ""
+
+#: partsrequest/models.py:12
+msgid "Apply type"
+msgstr ""
+
+#: partsrequest/models.py:13
+msgid "Material type"
+msgstr ""
+
+#: partsrequest/models.py:14
+msgid "Apply reason"
+msgstr ""
+
+#: partsrequest/models.py:15
+msgid "Employee"
+msgstr ""
+
+#: partsrequest/models.py:16
+msgid "Cost center"
+msgstr ""
+
+#: partsrequest/models.py:20
+msgid "Request Date"
+msgstr ""
+
+#: partsrequest/models.py:27
+msgid "General Parts Requests"
+msgstr ""
+
+#: partsrequest/models.py:32
+msgid "Bin"
+msgstr ""
+
+#: partsrequest/models.py:33
+msgid "Parts name"
+msgstr ""
+
+#: partsrequest/models.py:34
+msgid "Quantity"
+msgstr ""
+
+#: partsrequest/models.py:35
+msgid "Actual Qty"
+msgstr ""
+
+#: partsrequest/models.py:36
+msgid "Unit"
+msgstr ""
+
+#: partsrequest/models.py:37
+msgid "Over Plan Usage"
+msgstr ""
+
+#: partsrequest/models.py:38
+msgid "Balance"
+msgstr ""
+
+#: partsrequest/models.py:39
+msgid "Usage by once"
+msgstr ""
+
+#: templates/admin/base_site.html:4 templates/admin/base_site.html.py:16
+msgid "Sputter Parts Recycle System"
+msgstr "Sputter备件回收系统"
