@@ -43,7 +43,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'django_fsm',
-    'fsm_admin', 
+    'fsm_admin',
+    'rest_framework', 
 
     'dept', 
     'partsrequest',
@@ -127,3 +128,10 @@ ADMIN_TOOLS_INDEX_DASHBOARD = 'partsms.dashboard.CustomIndexDashboard'
 ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'partsms.dashboard.CustomAppIndexDashboard'
 ADMIN_TOOLS_MENU = 'partsms.menu.CustomMenu'
 # ADMIN_TOOLS_THEMING_CSS = 'admin_tools/css/theming.css'
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'PAGINATE_BY': 10
+}
+

@@ -1,0 +1,73 @@
+
+* Notes API interface
+- URL
+  http://10.81.230.234/partsms/partsrequest/
+
+- HTTP VERBS
+  POST
+
+- Data
+  json
+
+  #+BEGIN_EXAMPLE 
+{
+  "request_no": "申请单号", 
+  "apply_type": "申请类型", 
+  "material_type": "物料类型", 
+  "apply_reason": "申请原因", 
+  "employee": "领用人工号", 
+  "cost_center": "成本中心", 
+  "approver": ["批准领用人1", "批准领用人2"], 
+  "request_date": "领用日期", 
+  "details": [
+     {
+        "pn": "物料编号",
+        "bin": "储存位置",
+        "description": "备件名称",
+        "qty": "领用数量"，
+        "actual_qty": "实发数量",
+        "unit": "物料单位",
+        "over_plan_usage": "超过计划用量",
+        "balance": "库存",
+        "usage_by_once": "单次量大领用量",
+        "remark": "备注"
+     },
+     { ... }
+  ]
+}
+  #+END_EXAMPLE
+  
+
+* ipython
+
+from dept.models import Employee
+from dept.serializers import EmployeeRefSerializer
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from rest_framework.compat import BytesIO
+
+######################
+# decode
+
+# 1. employee
+bohu = Employee.objects.filter(num='9527')[0]
+# 2. decode to json
+bohuser = EmployeeRefSerializer(bohu)
+content = JSONRenderer().render(bohuser.data)
+
+
+######################
+# encode
+
+# 1. json
+bohujson = '{"num": "9527"}'
+# 2. restore
+bohudata = JSONParser().parse(BytesIO(bohujson))
+bohuser = EmployeeRefSerializer(data=bohudata)
+# 3.
+bohuser.is_valid()
+bohuser.object
+
+
+partsrequest = PartsRequest(request_no='A201404001024',apply_type='app_type',material_type='mtype',apply_reason='aReason',employee='')
+
