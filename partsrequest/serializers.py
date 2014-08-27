@@ -27,6 +27,8 @@ class PartsRequestSerializer(serializers.ModelSerializer):
         return inst
 
     def transform_approver(self, obj, value):
+        if not value:
+            return ""
         uids = value.split(',')
         nums = map(lambda uid: Employee.objects.get(id = int(uid) ).num, uids)
         return JSONRenderer().render(nums)

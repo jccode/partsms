@@ -14,6 +14,9 @@ urlpatterns = patterns(
     url(r'', include(admin.site.urls)),    
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^parts/', include('partsrecycle.urls')),
+
+    # APIs
+    url(r'', include('partsrequest.urls')), 
 )
 
 
