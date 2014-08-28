@@ -13,7 +13,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.test import APIRequestFactory, APIClient
 from datetime import datetime
-import operator
+import operator, urllib2, base64
 from dept.models import Employee
 from models import PartsRequest, RequestDetail
 from serializers import PartsRequestSerializer
@@ -80,6 +80,14 @@ class PartsRequestSerializerTest(TestCase):
         self.assertEqual(preq.request_no, "A201404001024") # request_no
         self.assertEqual(preq.approver, u"101,102")        # approver
         self.assertEqual(preq.requestdetail_set.count(), 2) # request detail
+
+    def test_parts_request_deserialize_with_not_exist_num(self):
+        json = json_data.replace('9528', '9999')
+        data = JSONParser().parse(BytesIO(json))
+        ser = PartsRequestSerializer(data=data)
+        self.assertTrue(ser.is_valid())
+        e = Employee.objects.get(num='9999')
+        self.assertNotEqual(e, None)
         
         
 class PartsRequestAPITest(TestCase):
@@ -156,4 +164,7 @@ class PartsRequestAPITest(TestCase):
         resp = self.client.post(self.url, content_type='application/json', data=json_data)
         self.assertTrue(status.is_success(resp.status_code))
         self.assertEqual(c1+1, PartsRequest.objects.count())
+    
+
+        
     
