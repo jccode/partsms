@@ -122,6 +122,11 @@ class CustomAppIndexDashboard(AppIndexDashboard):
         AppIndexDashboard.__init__(self, *args, **kwargs)
         if self.app_title == 'Partsrecycle':
             self.children.append(PartsRecycleModule())
+        elif self.app_title == 'Authentication and Authorization':
+            self.children.append(modules.ModelList(
+                title = u'Authentication',
+                models = ['django.contrib.auth.*',]
+            ))
         else:
             self.children.append(modules.ModelList(self.app_title, self.models))
             

@@ -26,3 +26,14 @@ div.breadcrumbs {
 div.breadcrumbs a {
     display: inline;
 }
+
+/* override base.css in Django 1.7 */
+#branding {
+    float: none;
+}
+#user-tools {
+    float: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+}

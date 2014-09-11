@@ -30,8 +30,10 @@ class RequestAdminForm(forms.ModelForm):
                                               widget=FilteredSelectMultiple(_("Approver"),
                                                                             is_stacked=False),
                                               label=_('Approver'))
+
     class Meta:
         model = PartsRequest
+        exclude = []
         
 
 class RequestAdmin(admin.ModelAdmin):
