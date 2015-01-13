@@ -1,0 +1,39 @@
+[
+{
+"request_no":"A2014010006",
+"apply_type":"A",
+"material_type":"Consumable",
+"apply_reason":"",
+"employee":"3p05167",
+"cost_center":"34D001",
+"approver":"Lihong SZ Zhang/China/HGST",
+"request_date":"2014/1/17 14:02:03",
+"item":[
+{
+"pn":"200157",
+"bin":"J2A101",
+"description":"S 小号手套",
+"qty":"2",
+"actual_qty":"2",
+"unit":"both",
+"over_plan_usage":"0",
+"balance":"129250",
+"usage_by_once":"0",
+"remark":""
+},
+{
+"pn":"200158",
+"bin":"J4A201",
+"description":"Xs小号手套",
+"qty":"2",
+"actual_qty":"2",
+"unit":"both",
+"over_plan_usage":"0",
+"balance":"30700",
+"usage_by_once":"0",
+"remark":""
+}
+]
+}
+]
+
