@@ -54,12 +54,12 @@ class PartsRecycle(models.Model):
     tool = models.CharField(_('Tool'), max_length=20)
     stn = models.CharField(_('STN'), max_length=50)
 
-    employee = models.ForeignKey(Employee, related_name="+", verbose_name=_('Recycler'))
-    supervisor = models.ForeignKey(Employee, related_name="+", verbose_name=_('Supervisor'))
-    manager = models.ForeignKey(Employee, related_name="+", verbose_name=_('Manager'))
-    shift = models.CharField(_('Shift'), choices=SHIFT_CHOICES, max_length=3)
-    return_date = models.DateField(_('Return Date'))
-    status_before_recycle = models.CharField(_('Status before recycle'), choices=STATUS_BEFORE_RECYCLE, max_length=20)
+    employee = models.ForeignKey(Employee, related_name="+", verbose_name=_('Recycler'), null=True)
+    supervisor = models.ForeignKey(Employee, related_name="+", verbose_name=_('Supervisor'), null=True)
+    manager = models.ForeignKey(Employee, related_name="+", verbose_name=_('Manager'), null=True)
+    shift = models.CharField(_('Shift'), choices=SHIFT_CHOICES, max_length=3, null=True)
+    return_date = models.DateField(_('Return Date'), null=True)
+    status_before_recycle = models.CharField(_('Status before recycle'), choices=STATUS_BEFORE_RECYCLE, max_length=20, null=True)
     description = models.TextField(_('Description'), max_length=200, blank=True, null=True)
 
     approver = models.ForeignKey(Employee, related_name="+", verbose_name=_('Confirmmer'), null=True)
