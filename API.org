@@ -137,3 +137,13 @@ partsrequest = PartsRequest(request_no='A201404001024',apply_type='app_type',mat
 #+END_SRC
 
   
+* 问题
+** 数据格式问题
+   1. 申请单明细,不要用"item",用"requestdetail_set".
+   2. employee用的是工号,不是纯数字吗?
+   3. 数据库字段null问题. 有哪些字段允许为null?
+      
+** 接口问题
+   1. Notes端何时生成数据,频率?
+
+      
