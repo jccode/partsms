@@ -3,3 +3,4 @@
 docs/_build
 *.sqlite3
 *~
+*.log
