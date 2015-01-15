@@ -44,7 +44,8 @@ INSTALLED_APPS = (
 
     'django_fsm',
     'fsm_admin',
-    'rest_framework', 
+    'rest_framework',
+    'selectable', 
 
     'dept', 
     'partsrequest',

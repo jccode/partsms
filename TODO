@@ -26,6 +26,8 @@
 ** DONE 查看历史,面包屑,及跳转
 ** DONE Dashboard menu PartsRecycle的链接不对.
 ** DONE 主页标题修改为: Sputter备件回收系统
-** PartsRequest增加webservice接口与Notes同步
-** PartsRequest 新增后,自动拆单为 PartsRecycle
+** DONE PartsRequest增加webservice接口与Notes同步
+** DONE PartsRequest 新增后,自动拆单为 PartsRecycle
+** DONE 人员选择改造为 auto-complete.
+** TODO 人员选择, 允许填系统外的人. (涉及db设计改造,去掉外键关联)
 

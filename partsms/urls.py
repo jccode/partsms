@@ -15,9 +15,10 @@ urlpatterns = patterns(
     url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^parts/', include('partsrecycle.urls')),
 
-    # APIs
-    url(r'', include('partsrequest.urls')), 
-)
+    (r'^selectable/', include('selectable.urls')),
 
+    # APIs
+    url(r'', include('partsrequest.urls')),
+)
 
 

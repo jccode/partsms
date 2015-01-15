@@ -1,15 +1,15 @@
 {% extends "admin/base.html" %}
-{% load i18n admin_tools_menu_tags %}
+{% load i18n admin_tools_menu_tags staticfiles %}
 
 {% block title %}{% trans 'Sputter Parts Recycle System' %}{% endblock %}
 
 {% block extrastyle %}
-{{ block.super }}
-{% if user.is_active and user.is_staff %}
-{% if not is_popup %}
-{% admin_tools_render_menu_css %}
-{% endif %}
-{% endif %}
+  {{ block.super }}
+  {% if user.is_active and user.is_staff %}
+    {% if not is_popup %}
+      {% admin_tools_render_menu_css %}
+    {% endif %}
+  {% endif %}
 {% endblock %}
 
 {% block branding %}
@@ -17,9 +17,19 @@
 {% endblock %}
 
 {% block nav-global %}
-{% if user.is_active and user.is_staff %}
-{% if not is_popup %}
-{% admin_tools_render_menu %}
-{% endif %}
-{% endif %}
+  {% if user.is_active and user.is_staff %}
+    {% if not is_popup %}
+      {% admin_tools_render_menu %}
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+  <!-- load jquery, jquery-ui for selectable auto-complete widget -->
+  <link rel="stylesheet" href="{% static "admin_tools/css/jquery/jquery-ui.css" %}" type="text/css" media="screen, projection"/>
+  <script type="text/javascript" src="{% static "admin/js/jquery.js" %}" ></script>
+  <script type="text/javascript" src="{% static "admin_tools/js/jquery/jquery-ui.min.js" %}"></script>
+{% endblock %}
+
+{% block extrafoot %}
 {% endblock %}
