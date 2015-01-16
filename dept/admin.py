@@ -5,14 +5,12 @@ from django.contrib.auth.models import User
 from dept.models import Employee, Department
 from django.utils.translation import ugettext as _
 from django.forms import ModelForm
-
-# from selectable import AutoCompleteSelectField
 from selectable.forms.fields import AutoCompleteSelectField
 from dept.lookups import EmployeeLookup
 
 
 class EmployeeAdminInlineForm(ModelForm):
-    leader = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, required=False)
+    leader = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, required=False, label=_('leader'))
     # class Meta(object):
     #     model = Employee
 

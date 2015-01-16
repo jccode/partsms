@@ -4,7 +4,9 @@ from django.contrib.auth import models as auth
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.utils.translation import ugettext as _
 from partsrequest.models import PartsRequest, RequestDetail
+from selectable.forms.fields import AutoCompleteSelectField
 from dept.models import Employee
+from dept.lookups import EmployeeLookup
 
 
 # Register your models here.
@@ -26,6 +28,7 @@ class RequestAdminForm(forms.ModelForm):
     # approver = forms.ModelMultipleChoiceField(label=_('Approver'),
     #                                           widget=forms.SelectMultiple,
     #                                           queryset=Employee.objects.all())
+    employee = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Employee'))
     approver = forms.ModelMultipleChoiceField(queryset=Employee.objects.all(), 
                                               widget=FilteredSelectMultiple(_("Approver"),
                                                                             is_stacked=False),
@@ -77,7 +80,7 @@ class RequestAdmin(admin.ModelAdmin):
 
 
 # Register your models here
-        
+
 admin.site.register(PartsRequest, RequestAdmin)
 # admin.site.register(RequestDetail)
 
