@@ -72,10 +72,10 @@ class PartsRecycle(models.Model):
     remark_approved = models.TextField(_('Remark'), max_length=200, blank=True, null=True)
 
     # engineer_approver = models.ForeignKey(Employee, related_name="+", verbose_name=_('Confirmmer'), null=True)
-    engineer_approve = models.CharField(_('Confirmmer'), max_length=50, null=True)
+    engineer_approver = models.CharField(_('Confirmmer'), max_length=50, null=True)
     engineer_approve_date = models.DateField(_('Approve Date'), null=True)
     repaireable = models.NullBooleanField(_('Repairable'), null=True)
-    engineer_ack_status = models.CharField(_('Status'), choices=STATUS_AFTER_REPAIRED, max_length=20, null=True)
+    # engineer_ack_status = models.CharField(_('Status'), choices=STATUS_AFTER_REPAIRED, max_length=20, null=True)
     remark_engineer = models.TextField(_('Remark'), max_length=200, blank=True, null=True)
 
     # repairer = models.ForeignKey(Employee, related_name="+", verbose_name=_('Repairer'), null=True)
@@ -121,6 +121,13 @@ class PartsRecycle(models.Model):
     def repair(self):
         pass
 
+    @transition(field=state, source=Status.ENGINEER_APPROVE, target=Status.COMPLETED,
+                custom={'button_name':_('Scrapped')})
+    def obsolete(self):
+        value = map(lambda e: e[0], STATUS_AFTER_REPAIRED).index('Scrapped')
+        self.status_after_repaired = value
+        # how to save?
+        
     @transition(field=state, source=Status.REPAIR, target=Status.COMPLETED,
                 custom={'button_name':_('Stock In')})
     def complete(self):

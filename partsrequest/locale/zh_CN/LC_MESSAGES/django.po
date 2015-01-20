@@ -1,0 +1,116 @@
+# Django PartsMS message file for Chinese
+# Copyright (C) 2014 HGST
+# Jessie <junchang.chen@hgst.com>, 2014.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-20 23:53+0800\n"
+"PO-Revision-Date: 2015-01-20 23:58+0800\n"
+"Last-Translator: Jessie <junchang.chen@hgst.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: Chinese\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: admin.py:41 models.py:16
+msgid "Employee"
+msgstr ""
+
+#: admin.py:66
+msgid "department"
+msgstr "部门"
+
+#: admin.py:71
+msgid "employee number"
+msgstr "工号"
+
+#: admin.py:78 models.py:20
+msgid "Approver"
+msgstr ""
+
+#: apps.py:9
+msgid "Parts Request"
+msgstr "备件申请单"
+
+#: models.py:11
+msgid "Request number"
+msgstr ""
+
+#: models.py:12
+msgid "Apply type"
+msgstr ""
+
+#: models.py:13
+msgid "Material type"
+msgstr ""
+
+#: models.py:14
+msgid "Apply reason"
+msgstr ""
+
+#: models.py:17
+msgid "Cost center"
+msgstr ""
+
+#: models.py:21
+msgid "Request Date"
+msgstr ""
+
+#: models.py:27
+msgid "General Parts Request"
+msgstr "备件申请单"
+
+#: models.py:28
+msgid "General Parts Requests"
+msgstr "备件申请单"
+
+#: models.py:32
+msgid "P/N"
+msgstr ""
+
+#: models.py:33
+msgid "Bin"
+msgstr ""
+
+#: models.py:34
+msgid "Parts name"
+msgstr "备件名称"
+
+#: models.py:35
+msgid "Quantity"
+msgstr "领(退)数量"
+
+#: models.py:36
+msgid "Actual Qty"
+msgstr "实发(收)数量"
+
+#: models.py:37
+msgid "Unit"
+msgstr "物料单位"
+
+#: models.py:38
+msgid "Over Plan Usage"
+msgstr "超过计划用量"
+
+#: models.py:39
+msgid "Balance"
+msgstr "库存"
+
+#: models.py:40
+msgid "Usage by once"
+msgstr "单次最大领用量"
+
+#: models.py:41
+msgid "Remark"
+msgstr ""
+
+#~ msgid "State"
+#~ msgstr "状态"
+
+#~ msgid "Recycle"
+#~ msgstr "退料人"

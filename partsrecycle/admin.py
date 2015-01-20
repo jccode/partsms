@@ -20,6 +20,7 @@ from partsrecycle.models import PartsRecycle, Status
 from partsrecycle.views import permission_denied_view
 from partsrecycle.utils import statusUrl
 from selectable.forms.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
+from selectable.forms.widgets import AutoCompleteSelectWidget
 from dept.models import Employee
 from dept.lookups import EmployeeLookup
 
@@ -62,13 +63,32 @@ class PartsRecycleChangeList(ChangeList):
 
             
 class PartsRecycleForm(forms.ModelForm):
-    employee = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Recycler'))
-    supervisor = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Supervisor'))
-    manager = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Manager'))
-    approver = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Confirmmer'))
-    engineer_approve = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Confirmmer'))
-    repairer = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Repairer'))
+    employee = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Recycler'), required=False)
+    supervisor = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Supervisor'), required=False)
+    manager = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Manager'), required=False)
+    approver = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Confirmmer'), required=False)
+    engineer_approver = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Confirmmer'), required=False)
+    repairer = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Repairer'), required=False)
 
+    _required_fields = {
+        Status.DRAFT: ('employee', 'supervisor', 'manager'),
+        Status.SUPERVISOR_APPROVE: ('approver', ),
+        Status.ENGINEER_APPROVE: ('engineer_approver', ),
+        Status.REPAIR: ('repairer', )
+    }
+
+    def __init__(self, *args, **kwargs):
+        super(PartsRecycleForm, self).__init__(*args, **kwargs)
+        if kwargs is not None and 'instance' in kwargs and kwargs['instance'] is not None:
+            model = kwargs['instance']
+            fields = self._required_fields.get(model.state)
+            if fields:
+                for field in fields:
+                    self.fields.get(field).required = True
+        else:                   # DRAFT
+            for field in self._required_fields.get(Status.DRAFT):
+                self.fields.get(field).required = True
+        
 
 class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
     _fields = [
@@ -92,7 +112,7 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
             'group': 'Engineer Approve', 
             'status': Status.ENGINEER_APPROVE, 
             'fields': ('engineer_approver', 'engineer_approve_date', 'repaireable',
-                       'engineer_ack_status', 'remark_engineer'), 
+                       'remark_engineer'), 
         }, 
         {
             'group': 'Repair', 
@@ -115,6 +135,17 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
             # 'classes': ('collapse',),
             'fields': v['fields']
         }) for v in self._fields if v['status'] <= status ]
+
+        # kwargs = {} if not kwargs else kwargs
+        # kwargs['widgets'] = {
+        #     "employee":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True),
+        #     "supervisor":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True),
+        #     "manager":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True),
+        #     "approver":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True),
+        #     "engineer_approve":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True),
+        #     "repairer":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True)
+        # }
+        
         return super(PartsRecycleAdmin, self).get_form(request, obj, **kwargs)
         # return PartsRecycleForm
 
@@ -345,8 +376,14 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         css = {
             "all": ("common/css/style.css", )
         }
-        js = ()
+        js = ("partsrecycle/js/parts_recycle.js", )
 
         
 # Register your models here.
 admin.site.register(PartsRecycle, PartsRecycleAdmin)
+
+
+
+
+
+

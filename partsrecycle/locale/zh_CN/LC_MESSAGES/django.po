@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-20 18:42+0800\n"
+"POT-Creation-Date: 2015-01-20 23:54+0800\n"
 "PO-Revision-Date: 2015-01-20 18:42+0800\n"
 "Last-Translator: Jessie <junchang.chen@hgst.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,13 +29,21 @@ msgstr "主管"
 msgid "Manager"
 msgstr "经理"
 
-#: admin.py:317
+#: admin.py:68 admin.py:69 models.py:69 models.py:75
+msgid "Confirmmer"
+msgstr "确认人"
+
+#: admin.py:70 models.py:82
+msgid "Repairer"
+msgstr "维修人"
+
+#: admin.py:319
 #, python-format
 msgid ""
 "The %(name)s \"%(obj)s\" was added successfully. You may edit it again below."
 msgstr ""
 
-#: admin.py:329
+#: admin.py:331
 #, python-format
 msgid ""
 "The %(name)s \"%(obj)s\" was changed successfully. You may add another "
@@ -114,10 +122,6 @@ msgstr "状态"
 msgid "Description"
 msgstr "情况描述"
 
-#: models.py:69 models.py:75
-msgid "Confirmmer"
-msgstr "确认人"
-
 #: models.py:70 models.py:76
 msgid "Approve Date"
 msgstr "确认日期"
@@ -137,10 +141,6 @@ msgstr "是否可维修"
 #: models.py:78
 msgid "Status"
 msgstr "状态"
-
-#: models.py:82
-msgid "Repairer"
-msgstr "维修人"
 
 #: models.py:83
 msgid "Repaired Date"
@@ -162,27 +162,27 @@ msgstr "入库单号"
 msgid "Flow state"
 msgstr "流程状态"
 
-#: models.py:94
+#: models.py:93
 msgid "Parts Recycle"
 msgstr "备件回收"
 
-#: models.py:95
+#: models.py:94
 msgid "Parts Recycles"
 msgstr "备件回收"
 
-#: models.py:111
+#: models.py:110
 msgid "Supervisor Approve"
 msgstr "主管审批"
 
-#: models.py:116
+#: models.py:115
 msgid "Engineer Approve"
 msgstr "责任工程师审批"
 
-#: models.py:121
+#: models.py:120
 msgid "Repair"
 msgstr "维修"
 
-#: models.py:126
+#: models.py:125
 msgid "Stock In"
 msgstr "入库"
 
@@ -254,66 +254,3 @@ msgstr "备件回收"
 #: utils.py:32
 msgid "query"
 msgstr ""
-
-#~ msgid "Approver"
-#~ msgstr "批准领用人"
-
-#~ msgid "department"
-#~ msgstr "部门"
-
-#~ msgid "employee number"
-#~ msgstr "工号"
-
-#~ msgid "Apply type"
-#~ msgstr "申请类型"
-
-#~ msgid "Material type"
-#~ msgstr "物料类型"
-
-#~ msgid "Apply reason"
-#~ msgstr "申请原因"
-
-#~ msgid "Employee"
-#~ msgstr "领用人"
-
-#~ msgid "Cost center"
-#~ msgstr "成本中心"
-
-#~ msgid "Request Date"
-#~ msgstr "日期"
-
-#~ msgid "General Parts Request"
-#~ msgstr "备件申请单"
-
-#~ msgid "General Parts Requests"
-#~ msgstr "备件申请单"
-
-#~ msgid "Bin"
-#~ msgstr "储存位置"
-
-#~ msgid "Parts name"
-#~ msgstr "备件名称"
-
-#~ msgid "Quantity"
-#~ msgstr "领(退)数量"
-
-#~ msgid "Actual Qty"
-#~ msgstr "实发(收)数量"
-
-#~ msgid "Unit"
-#~ msgstr "物料单位"
-
-#~ msgid "Over Plan Usage"
-#~ msgstr "超过计划用量"
-
-#~ msgid "Balance"
-#~ msgstr "库存"
-
-#~ msgid "Usage by once"
-#~ msgstr "单次最大领用量"
-
-#~ msgid "State"
-#~ msgstr "状态"
-
-#~ msgid "Recycle"
-#~ msgstr "退料人"
