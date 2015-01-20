@@ -19,6 +19,9 @@ from fsm_admin.mixins import FSMTransitionMixin
 from partsrecycle.models import PartsRecycle, Status
 from partsrecycle.views import permission_denied_view
 from partsrecycle.utils import statusUrl
+from selectable.forms.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
+from dept.models import Employee
+from dept.lookups import EmployeeLookup
 
 
 def permisson_required_decorator(perm, login_url=None):
@@ -59,7 +62,12 @@ class PartsRecycleChangeList(ChangeList):
 
             
 class PartsRecycleForm(forms.ModelForm):
-    pass
+    employee = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Recycler'))
+    supervisor = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Supervisor'))
+    manager = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Manager'))
+    approver = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Confirmmer'))
+    engineer_approve = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Confirmmer'))
+    repairer = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Repairer'))
 
 
 class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
@@ -94,20 +102,21 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         }
     ]
 
-    list_display = ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn', 'employee', 'shift',
-                    'return_date', 'status_before_recycle', 'state')
     change_form_template = 'admin/partsrecycle/change_form.html'
     change_list_template = 'admin/partsrecycle/change_list.html'
+    form = PartsRecycleForm
 
     def get_form(self, request, obj=None, **kwargs):
         status = Status.DRAFT
         if obj:
             status = obj.state
+
         self.fieldsets = [ (_(v['group']), {
             # 'classes': ('collapse',),
             'fields': v['fields']
         }) for v in self._fields if v['status'] <= status ]
         return super(PartsRecycleAdmin, self).get_form(request, obj, **kwargs)
+        # return PartsRecycleForm
 
     def get_readonly_fields(self, request, obj=None):
         url_status = statusUrl.get_url_status(request)
@@ -160,6 +169,13 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
             return ('state', )
         return None
 
+    def get_list_display(self, request):
+        fields = ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn', 'employee', 'shift',
+                    'return_date', 'state')
+        if statusUrl.get_url_status(request) == statusUrl.STATUS_QUERY:
+            return fields + ('status_after_repaired',)
+        return fields
+        
     def get_actions(self, request):
         if statusUrl.get_url_status(request) != Status.DRAFT:
             return None
@@ -324,7 +340,13 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
             
         else:
             return super(PartsRecycleAdmin, self).response_change(request, obj)
-            
 
+    class Media:
+        css = {
+            "all": ("common/css/style.css", )
+        }
+        js = ()
+
+        
 # Register your models here.
 admin.site.register(PartsRecycle, PartsRecycleAdmin)

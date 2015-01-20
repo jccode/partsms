@@ -87,8 +87,7 @@ class PartsRecycle(models.Model):
     store_in_date = models.DateField(_('Store Date'), blank=True, null=True)
     store_in_num = models.CharField(_('Store in number'), max_length=20, blank=True, null=True)
 
-    state = FSMIntegerField(default=Status.DRAFT, verbose_name=_('State'), choices=Status.CHOICES, protected=True)
-
+    state = FSMIntegerField(default=Status.DRAFT, verbose_name=_('Flow state'), choices=Status.CHOICES, protected=True)
     
     class Meta:
         verbose_name = _('Parts Recycle')

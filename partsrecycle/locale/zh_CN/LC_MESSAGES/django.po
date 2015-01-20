@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-08 15:48+0800\n"
-"PO-Revision-Date: 2015-01-16 17:24+0800\n"
+"POT-Creation-Date: 2015-01-20 18:42+0800\n"
+"PO-Revision-Date: 2015-01-20 18:42+0800\n"
 "Last-Translator: Jessie <junchang.chen@hgst.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: Chinese\n"
@@ -17,260 +17,303 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: admin.py:57 admin.py:59 admin.py:84 models.py:21
-msgid "Approver"
-msgstr "批准领用人"
-
-#: admin.py:74
-msgid "department"
-msgstr "部门"
-
-#: admin.py:78
-msgid "employee number"
-msgstr "工号"
-
-#: models.py:13 models.py:86
-msgid "Request number"
-msgstr "领料单号"
-
-#: models.py:14
-msgid "Apply type"
-msgstr "申请类型"
-
-#: models.py:15
-msgid "Material type"
-msgstr "物料类型"
-
-#: models.py:16
-msgid "Apply reason"
-msgstr "申请原因"
-
-#: models.py:17
-msgid "Employee"
-msgstr "领用人"
-
-#: models.py:18
-msgid "Cost center"
-msgstr "成本中心"
-
-#: models.py:22
-msgid "Request Date"
-msgstr "日期"
-
-#: models.py:28
-msgid "General Parts Request"
-msgstr "备件申请单"
-
-#: models.py:29
-msgid "General Parts Requests"
-msgstr "备件申请单"
-
-#: models.py:33 models.py:88
-msgid "P/N"
-msgstr "物料编号"
-
-#: models.py:34
-msgid "Bin"
-msgstr "储存位置"
-
-#: models.py:35
-msgid "Parts name"
-msgstr "备件名称"
-
-#: models.py:36
-msgid "Quantity"
-msgstr "领(退)数量"
-
-#: models.py:37
-msgid "Actual Qty"
-msgstr "实发(收)数量"
-
-#: models.py:38
-msgid "Unit"
-msgstr "物料单位"
-
-#: models.py:39
-msgid "Over Plan Usage"
-msgstr "超过计划用量"
-
-#: models.py:40
-msgid "Balance"
-msgstr "库存"
-
-#: models.py:41
-msgid "Usage by once"
-msgstr "单次最大领用量"
-
-#: models.py:42 models.py:104 models.py:110 models.py:114
-msgid "Remark"
-msgstr "备注"
-
-#: models.py:56
-msgid "parts recycle"
-msgstr "备件回收"
-
-#: models.py:56 models.py:61
-msgid "supervisor approve"
-msgstr "主管审批"
-
-#: models.py:56 models.py:62
-msgid "engineer approve"
-msgstr "责任工程师审批"
-
-#: models.py:56 models.py:63
-msgid "repaire"
-msgstr "维修"
-
-#: models.py:56 models.py:64
-msgid "completed"
-msgstr "完成"
-
-#: models.py:60
-msgid "draft"
-msgstr "草稿"
-
-#: models.py:80
-msgid "Repaired"
-msgstr "已修好"
-
-#: models.py:81
-msgid "Scrapped"
-msgstr "报废"
-
-#: models.py:82
-msgid "Engineering material"
-msgstr "工程物料"
-
-#: models.py:87
-msgid "Parts"
-msgstr "备件"
-
-#: models.py:89
-msgid "SN"
-msgstr "序列号"
-
-#: models.py:90
-msgid "Tool"
-msgstr ""
-
-#: models.py:91
-msgid "STN"
-msgstr ""
-
-#: models.py:93
+#: admin.py:65 models.py:60
 msgid "Recycler"
 msgstr "退料人"
 
-#: models.py:94
+#: admin.py:66 models.py:61
 msgid "Supervisor"
 msgstr "主管"
 
-#: models.py:95
+#: admin.py:67 models.py:62
 msgid "Manager"
 msgstr "经理"
 
-#: models.py:96
+#: admin.py:317
+#, python-format
+msgid ""
+"The %(name)s \"%(obj)s\" was added successfully. You may edit it again below."
+msgstr ""
+
+#: admin.py:329
+#, python-format
+msgid ""
+"The %(name)s \"%(obj)s\" was changed successfully. You may add another "
+"%(name)s below."
+msgstr ""
+
+#: models.py:24
+msgid "draft"
+msgstr "草稿"
+
+#: models.py:25 utils.py:17
+msgid "supervisor approve"
+msgstr "主管审批"
+
+#: models.py:26 utils.py:22
+msgid "engineer approve"
+msgstr "责任工程师审批"
+
+#: models.py:27 utils.py:27
+msgid "repaire"
+msgstr "维修"
+
+#: models.py:28
+msgid "completed"
+msgstr "完成"
+
+#: models.py:44
+msgid "Repaired"
+msgstr "已修好"
+
+#: models.py:45
+msgid "Scrapped"
+msgstr "报废"
+
+#: models.py:46
+msgid "Engineering material"
+msgstr "工程物料"
+
+#: models.py:50
+msgid "Request number"
+msgstr "领料单号"
+
+#: models.py:51
+msgid "Parts"
+msgstr "备件"
+
+#: models.py:52
+msgid "P/N"
+msgstr "物料编号"
+
+#: models.py:53
+msgid "SN"
+msgstr "序列号"
+
+#: models.py:54
+msgid "Tool"
+msgstr ""
+
+#: models.py:55
+msgid "STN"
+msgstr ""
+
+#: models.py:63
 msgid "Shift"
 msgstr "班次"
 
-#: models.py:97
+#: models.py:64
 msgid "Return Date"
 msgstr "退回日期"
 
-#: models.py:98
+#: models.py:65
 msgid "Status before recycle"
 msgstr "状态"
 
-#: models.py:99
+#: models.py:66
 msgid "Description"
 msgstr "情况描述"
 
-#: models.py:101 models.py:106
+#: models.py:69 models.py:75
 msgid "Confirmmer"
 msgstr "确认人"
 
-#: models.py:102 models.py:107
+#: models.py:70 models.py:76
 msgid "Approve Date"
 msgstr "确认日期"
 
-#: models.py:103
+#: models.py:71
 msgid "Confirm result"
 msgstr "确认结果"
 
-#: models.py:108
+#: models.py:72 models.py:79 models.py:84
+msgid "Remark"
+msgstr "备注"
+
+#: models.py:77
 msgid "Repairable"
 msgstr "是否可维修"
 
-#: models.py:109
+#: models.py:78
 msgid "Status"
 msgstr "状态"
 
-#: models.py:112
+#: models.py:82
 msgid "Repairer"
 msgstr "维修人"
 
-#: models.py:113
+#: models.py:83
 msgid "Repaired Date"
 msgstr "维修日期"
 
-#: models.py:115
+#: models.py:85
 msgid "Status after repaired"
 msgstr "状态"
 
-#: models.py:117
+#: models.py:87
 msgid "Store Date"
 msgstr "入库时间"
 
-#: models.py:118
+#: models.py:88
 msgid "Store in number"
 msgstr "入库单号"
 
-#: models.py:120
-msgid "State"
-msgstr "状态"
+#: models.py:90
+msgid "Flow state"
+msgstr "流程状态"
 
-#: models.py:124
+#: models.py:94
 msgid "Parts Recycle"
 msgstr "备件回收"
 
-#: models.py:125
+#: models.py:95
 msgid "Parts Recycles"
 msgstr "备件回收"
 
-#: models.py:141
+#: models.py:111
 msgid "Supervisor Approve"
 msgstr "主管审批"
 
-#: models.py:146
+#: models.py:116
 msgid "Engineer Approve"
 msgstr "责任工程师审批"
 
-#: models.py:151
+#: models.py:121
 msgid "Repair"
 msgstr "维修"
 
-#: models.py:156
+#: models.py:126
 msgid "Stock In"
 msgstr "入库"
 
-#: utils.py:32
-msgid "query"
-msgstr ""
-
-#: templates/admin/partsapp/change_list.html:8
-#: templates/admin/partsapp/permission_denied.html:4
+#: templates/admin/partsrecycle/change_form.html:6
+#: templates/admin/partsrecycle/change_list.html:7
+#: templates/admin/partsrecycle/object_history.html:6
+#: templates/admin/partsrecycle/permission_denied.html:4
 msgid "Home"
 msgstr ""
 
-#: templates/admin/partsapp/permission_denied.html:8
+#: templates/admin/partsrecycle/change_form.html:22
+msgid "Add"
+msgstr ""
+
+#: templates/admin/partsrecycle/change_form.html:29
+#: templates/admin/partsrecycle/object_history.html:10
+msgid "History"
+msgstr ""
+
+#: templates/admin/partsrecycle/change_form.html:31
+msgid "View on site"
+msgstr ""
+
+#: templates/admin/partsrecycle/change_list.html:25
+#, python-format
+msgid "Add %(name)s"
+msgstr ""
+
+#: templates/admin/partsrecycle/fsm_submit_line.html:4
+#: templates/fsm_admin/fsm_submit_line.html:4
+msgid "Save"
+msgstr ""
+
+#: templates/admin/partsrecycle/fsm_submit_line.html:7
+#: templates/fsm_admin/fsm_submit_line.html:7
+msgid "Delete"
+msgstr ""
+
+#: templates/admin/partsrecycle/fsm_submit_line.html:10
+#: templates/fsm_admin/fsm_submit_line.html:10
+msgid "Save as new"
+msgstr ""
+
+#: templates/admin/partsrecycle/fsm_submit_line.html:13
+#: templates/admin/partsrecycle/fsm_submit_line.html:15
+#: templates/fsm_admin/fsm_submit_line.html:11
+msgid "Save and add another"
+msgstr ""
+
+#: templates/admin/partsrecycle/fsm_submit_line.html:18
+#: templates/fsm_admin/fsm_submit_line.html:12
+msgid "Save and continue editing"
+msgstr ""
+
+#: templates/admin/partsrecycle/permission_denied.html:8
 msgid ""
 "Permission denied. You haven't been granted to view this page. Please turn "
 "to index page or re-login again."
 msgstr "<h1>没有权限</h1> 你并没有查看本页面的权限. 请返回主页或者重新登陆. "
 
-#: templates/admin/partsapp/permission_denied.html:10
+#: templates/admin/partsrecycle/permission_denied.html:10
 msgid "Log in again"
 msgstr ""
+
+#: utils.py:12
+msgid "parts recycle"
+msgstr "备件回收"
+
+#: utils.py:32
+msgid "query"
+msgstr ""
+
+#~ msgid "Approver"
+#~ msgstr "批准领用人"
+
+#~ msgid "department"
+#~ msgstr "部门"
+
+#~ msgid "employee number"
+#~ msgstr "工号"
+
+#~ msgid "Apply type"
+#~ msgstr "申请类型"
+
+#~ msgid "Material type"
+#~ msgstr "物料类型"
+
+#~ msgid "Apply reason"
+#~ msgstr "申请原因"
+
+#~ msgid "Employee"
+#~ msgstr "领用人"
+
+#~ msgid "Cost center"
+#~ msgstr "成本中心"
+
+#~ msgid "Request Date"
+#~ msgstr "日期"
+
+#~ msgid "General Parts Request"
+#~ msgstr "备件申请单"
+
+#~ msgid "General Parts Requests"
+#~ msgstr "备件申请单"
+
+#~ msgid "Bin"
+#~ msgstr "储存位置"
+
+#~ msgid "Parts name"
+#~ msgstr "备件名称"
+
+#~ msgid "Quantity"
+#~ msgstr "领(退)数量"
+
+#~ msgid "Actual Qty"
+#~ msgstr "实发(收)数量"
+
+#~ msgid "Unit"
+#~ msgstr "物料单位"
+
+#~ msgid "Over Plan Usage"
+#~ msgstr "超过计划用量"
+
+#~ msgid "Balance"
+#~ msgstr "库存"
+
+#~ msgid "Usage by once"
+#~ msgstr "单次最大领用量"
+
+#~ msgid "State"
+#~ msgstr "状态"
 
 #~ msgid "Recycle"
 #~ msgstr "退料人"

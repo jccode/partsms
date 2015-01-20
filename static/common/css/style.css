@@ -1,0 +1,17 @@
+
+/* auto complete widget width */
+.ui-autocomplete-input {
+    font-size: 11px;
+    width: 20em;
+}
+
+.ui-button .ui-button-text {
+    display: inline;
+
+}
+
+ul.selectable-deck-bottom-inline li.selectable-deck-item, ul.selectable-deck-top-inline li.selectable-deck-item {
+    padding-right: 10px;
+}
+
+
