@@ -1,10 +1,13 @@
+
+import ast
 from django.contrib import admin
 from django import forms
 from django.contrib.auth import models as auth
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.utils.translation import ugettext as _
 from partsrequest.models import PartsRequest, RequestDetail
-from selectable.forms.fields import AutoCompleteSelectField
+from selectable.forms.fields import AutoCompleteSelectField, AutoCompleteSelectMultipleField
+from selectable.forms.widgets import AutoCompleteSelectMultipleWidget, AutoComboboxWidget
 from dept.models import Employee
 from dept.lookups import EmployeeLookup
 
@@ -25,18 +28,29 @@ class RequestDetailInline(admin.TabularInline):
 
     
 class RequestAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        if kwargs and 'instance' in kwargs and kwargs['instance']:
+            pq = kwargs['instance']
+            if pq.approver and "," in pq.approver:
+                pq.approver = pq.approver.split(",")
+        super(RequestAdminForm, self).__init__(*args, **kwargs)
+    
     # approver = forms.ModelMultipleChoiceField(label=_('Approver'),
     #                                           widget=forms.SelectMultiple,
     #                                           queryset=Employee.objects.all())
     employee = AutoCompleteSelectField(lookup_class=EmployeeLookup, allow_new=True, label=_('Employee'))
-    approver = forms.ModelMultipleChoiceField(queryset=Employee.objects.all(), 
-                                              widget=FilteredSelectMultiple(_("Approver"),
-                                                                            is_stacked=False),
-                                              label=_('Approver'))
+    # approver = forms.ModelMultipleChoiceField(queryset=Employee.objects.all(), 
+    #                                           widget=FilteredSelectMultiple(_("Approver"),
+    #                                                                         is_stacked=False),
+    #                                           label=_('Approver'))
+    # approver = AutoCompleteSelectMultipleField(lookup_class=EmployeeLookup, label=_("Approver"))
 
     class Meta:
         model = PartsRequest
         exclude = []
+        widgets = {
+            'approver': AutoCompleteSelectMultipleWidget(lookup_class=EmployeeLookup, position="bottom-inline")
+        }
         
 
 class RequestAdmin(admin.ModelAdmin):
@@ -47,17 +61,20 @@ class RequestAdmin(admin.ModelAdmin):
                     'employee', 'cost_center', 'approver_name', )
 
     def department(self, obj):
-        return obj.employee.department
+        # return obj.employee.department
+        return ""
     department.short_description = _('department')
 
     def employee_num(self, obj):
-        return obj.employee.num
+        # return obj.employee.num
+        return 0
     employee_num.short_description = _('employee number')
 
     def approver_name(self, obj):
-        approver_ids = obj.approver
-        approvers = map(lambda uid: auth.User.objects.get(id=uid).username, approver_ids.split(','))
-        return "[%s]" % (", ".join(approvers))
+        # approver_ids = obj.approver
+        # approvers = map(lambda uid: auth.User.objects.get(id=uid).username, approver_ids.split(','))
+        # return "[%s]" % (", ".join(approvers))
+        return obj.approver
     approver_name.short_description = _('Approver')
 
     # def get_form(self, request, obj=None, **kwargs):
@@ -66,9 +83,7 @@ class RequestAdmin(admin.ModelAdmin):
     #     return super(RequestAdmin, self).get_form(request, obj, **kwargs)
 
     def save_model(self, request, obj, form, change):
-        approver = form.cleaned_data.get('approver')
-        approver_ids = map(lambda user: str(user.id), approver)
-        obj.approver = ",".join(approver_ids)
+        obj.approver = ",".join(ast.literal_eval(obj.approver))
         obj.save()
         
     class Media:

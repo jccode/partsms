@@ -26,14 +26,14 @@ class Employee(models.Model):
     num = models.CharField(_('number'), max_length=20)
 
     def __unicode__(self):
-        # return self.user.username
-        if self.user.last_name and self.user.first_name:
-            val = self.user.last_name + self.user.first_name
-        elif self.user.first_name and not self.user.last_name:
-            val = self.user.first_name
-        else:
-            val = self.user.username
-        return val
+        return self.user.username
+        # if self.user.last_name and self.user.first_name:
+        #     val = self.user.last_name + self.user.first_name
+        # elif self.user.first_name and not self.user.last_name:
+        #     val = self.user.first_name
+        # else:
+        #     val = self.user.username
+        # return val
             
 
     class Meta:
