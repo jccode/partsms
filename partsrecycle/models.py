@@ -124,12 +124,11 @@ class PartsRecycle(models.Model):
     @transition(field=state, source=Status.ENGINEER_APPROVE, target=Status.COMPLETED,
                 custom={'button_name':_('Scrapped')})
     def obsolete(self):
-        value = map(lambda e: e[0], STATUS_AFTER_REPAIRED).index('Scrapped')
-        self.status_after_repaired = value
-        # how to save?
+        # value = map(lambda e: e[0], STATUS_AFTER_REPAIRED).index('Scrapped')
+        self.status_after_repaired = 'Scrapped'
         
     @transition(field=state, source=Status.REPAIR, target=Status.COMPLETED,
-                custom={'button_name':_('Stock In')})
+                custom={'button_name':_('Submit')})
     def complete(self):
         pass
 

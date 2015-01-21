@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-20 23:54+0800\n"
-"PO-Revision-Date: 2015-01-20 18:42+0800\n"
+"POT-Creation-Date: 2015-01-21 12:24+0800\n"
+"PO-Revision-Date: 2015-01-21 12:25+0800\n"
 "Last-Translator: Jessie <junchang.chen@hgst.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: Chinese\n"
@@ -17,33 +17,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: admin.py:65 models.py:60
+#: admin.py:66 models.py:60
 msgid "Recycler"
 msgstr "退料人"
 
-#: admin.py:66 models.py:61
+#: admin.py:67 models.py:61
 msgid "Supervisor"
 msgstr "主管"
 
-#: admin.py:67 models.py:62
+#: admin.py:68 models.py:62
 msgid "Manager"
 msgstr "经理"
 
-#: admin.py:68 admin.py:69 models.py:69 models.py:75
+#: admin.py:69 admin.py:70 models.py:69 models.py:75
 msgid "Confirmmer"
 msgstr "确认人"
 
-#: admin.py:70 models.py:82
+#: admin.py:71 models.py:82
 msgid "Repairer"
 msgstr "维修人"
 
-#: admin.py:319
+#: admin.py:341
 #, python-format
 msgid ""
 "The %(name)s \"%(obj)s\" was added successfully. You may edit it again below."
 msgstr ""
 
-#: admin.py:331
+#: admin.py:353
 #, python-format
 msgid ""
 "The %(name)s \"%(obj)s\" was changed successfully. You may add another "
@@ -74,7 +74,7 @@ msgstr "完成"
 msgid "Repaired"
 msgstr "已修好"
 
-#: models.py:45
+#: models.py:45 models.py:125
 msgid "Scrapped"
 msgstr "报废"
 
@@ -138,10 +138,6 @@ msgstr "备注"
 msgid "Repairable"
 msgstr "是否可维修"
 
-#: models.py:78
-msgid "Status"
-msgstr "状态"
-
 #: models.py:83
 msgid "Repaired Date"
 msgstr "维修日期"
@@ -182,9 +178,9 @@ msgstr "责任工程师审批"
 msgid "Repair"
 msgstr "维修"
 
-#: models.py:125
-msgid "Stock In"
-msgstr "入库"
+#: models.py:131
+msgid "Submit"
+msgstr "提交"
 
 #: templates/admin/partsrecycle/change_form.html:6
 #: templates/admin/partsrecycle/change_list.html:7
@@ -254,3 +250,9 @@ msgstr "备件回收"
 #: utils.py:32
 msgid "query"
 msgstr ""
+
+#~ msgid "Stock In"
+#~ msgstr "入库"
+
+#~ msgid "Status"
+#~ msgstr "状态"

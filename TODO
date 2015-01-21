@@ -29,20 +29,20 @@
 ** DONE PartsRequest增加webservice接口与Notes同步
 ** DONE PartsRequest 新增后,自动拆单为 PartsRecycle
 ** DONE 人员选择改造为 auto-complete.
-** TODO 人员选择, 允许填系统外的人. (涉及db设计改造,去掉外键关联)
-** TODO PartsRecycle AdminForm 中加了 form字段后会导致无法保存. 需要解决
+** DONE 人员选择, 允许填系统外的人. (涉及db设计改造,去掉外键关联)
+** DONE PartsRecycle AdminForm 中加了 form字段后会导致无法保存. 需要解决
 ** TODO Notes API 调试
-** TODO 会议改动项
+** DONE 会议改动项
 *** DONE 生产辅料申请单 -> 备件申请单
-*** TODO 人员填写: 可输可填
-*** TODO 责任工程师审批:
+*** DONE 人员填写: 可输可填
+*** DONE 责任工程师审批:
 **** DONE "状态"去掉;
-**** TODO "是否可维修": "否": close; "是": 走到"维修"流程;
-*** TODO 维修节点:
-  - 状态:
-    - "已修好": 才需要填入库单号(必填)
-    - 其他: 不需要填
-  - 入库 按钮 改成:提交
-*** TODO 查询
-  - 状态: 物料状态 / 流程状态
-  - 物料状态: 报废/工程物料/已修好/NONE
+**** DONE "是否可维修": "否": close; "是": 走到"维修"流程;
+*** DONE 维修节点:
+- 状态:
+  - "已修好": 才需要填入库单号(必填)
+  - 其他: 不需要填
+- 入库 按钮 改成:提交
+*** DONE 查询
+- 状态: 物料状态 / 流程状态
+- 物料状态: 报废/工程物料/已修好/NONE

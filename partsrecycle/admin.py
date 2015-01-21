@@ -118,14 +118,14 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
             'group': 'Repair', 
             'status': Status.REPAIR, 
             'fields': ('repairer', 'repair_date', 'remark_repairer', 'status_after_repaired',
-                       'store_in_date', 'store_in_num')
+                       ('store_in_date', 'store_in_num'))
         }
     ]
 
     change_form_template = 'admin/partsrecycle/change_form.html'
     change_list_template = 'admin/partsrecycle/change_list.html'
     form = PartsRecycleForm
-
+            
     def get_form(self, request, obj=None, **kwargs):
         status = Status.DRAFT
         if obj:
@@ -136,18 +136,8 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
             'fields': v['fields']
         }) for v in self._fields if v['status'] <= status ]
 
-        # kwargs = {} if not kwargs else kwargs
-        # kwargs['widgets'] = {
-        #     "employee":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True),
-        #     "supervisor":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True),
-        #     "manager":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True),
-        #     "approver":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True),
-        #     "engineer_approve":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True),
-        #     "repairer":  AutoCompleteSelectWidget(lookup_class=EmployeeLookup, allow_new=True)
-        # }
-        
         return super(PartsRecycleAdmin, self).get_form(request, obj, **kwargs)
-        # return PartsRecycleForm
+
 
     def get_readonly_fields(self, request, obj=None):
         url_status = statusUrl.get_url_status(request)
@@ -206,6 +196,7 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
         if statusUrl.get_url_status(request) == statusUrl.STATUS_QUERY:
             return fields + ('status_after_repaired',)
         return fields
+
         
     def get_actions(self, request):
         if statusUrl.get_url_status(request) != Status.DRAFT:
@@ -371,7 +362,7 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
             
         else:
             return super(PartsRecycleAdmin, self).response_change(request, obj)
-
+            
     class Media:
         css = {
             "all": ("common/css/style.css", )
