@@ -34,7 +34,6 @@ class Employee(models.Model):
         # else:
         #     val = self.user.username
         # return val
-            
 
     class Meta:
         verbose_name = _('employee')

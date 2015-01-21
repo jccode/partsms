@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-20 23:53+0800\n"
-"PO-Revision-Date: 2015-01-21 10:51+0800\n"
+"POT-Creation-Date: 2015-01-22 01:02+0800\n"
+"PO-Revision-Date: 2015-01-22 01:02+0800\n"
 "Last-Translator: Jessie <junchang.chen@hgst.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: Chinese\n"
@@ -29,7 +29,7 @@ msgstr "部门"
 msgid "employee number"
 msgstr "工号"
 
-#: admin.py:78 models.py:20
+#: admin.py:78 models.py:22
 msgid "Approver"
 msgstr "批准领用人"
 
@@ -54,58 +54,66 @@ msgid "Apply reason"
 msgstr "申请原因"
 
 #: models.py:17
+msgid "Employee number"
+msgstr "工号"
+
+#: models.py:18
+msgid "Department"
+msgstr "部门"
+
+#: models.py:19
 msgid "Cost center"
 msgstr "成本中心"
 
-#: models.py:21
+#: models.py:23
 msgid "Request Date"
 msgstr "申请日期"
 
-#: models.py:27
+#: models.py:29
 msgid "General Parts Request"
 msgstr "备件申请单"
 
-#: models.py:28
+#: models.py:30
 msgid "General Parts Requests"
 msgstr "备件申请单"
 
-#: models.py:32
+#: models.py:34
 msgid "P/N"
 msgstr "物料编号"
 
-#: models.py:33
+#: models.py:35
 msgid "Bin"
 msgstr "存储位置"
 
-#: models.py:34
+#: models.py:36
 msgid "Parts name"
 msgstr "备件名称"
 
-#: models.py:35
+#: models.py:37
 msgid "Quantity"
 msgstr "领(退)数量"
 
-#: models.py:36
+#: models.py:38
 msgid "Actual Qty"
 msgstr "实发(收)数量"
 
-#: models.py:37
+#: models.py:39
 msgid "Unit"
 msgstr "物料单位"
 
-#: models.py:38
+#: models.py:40
 msgid "Over Plan Usage"
 msgstr "超过计划用量"
 
-#: models.py:39
+#: models.py:41
 msgid "Balance"
 msgstr "库存"
 
-#: models.py:40
+#: models.py:42
 msgid "Usage by once"
 msgstr "单次最大领用量"
 
-#: models.py:41
+#: models.py:43
 msgid "Remark"
 msgstr "备注"
 

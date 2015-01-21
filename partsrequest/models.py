@@ -14,6 +14,8 @@ class PartsRequest(models.Model):
     apply_reason = models.CharField(_('Apply reason'), max_length=200)
     # employee = models.ForeignKey(Employee, related_name="+", verbose_name=_('Employee'))
     employee = models.CharField(_('Employee'), max_length=50)
+    employee_num = models.CharField(_('Employee number'), max_length=20)
+    department = models.CharField(_("Department"), max_length=50)
     cost_center = models.CharField(_('Cost center'), max_length=20)
     # department =   # TODO: ForeignKey -> Department
     # TODO: approver 会有多个人. 多人选择控件. 但不存在外键关联
