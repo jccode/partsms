@@ -13,7 +13,7 @@ jQuery(function($) {
         var employee_name = $("#id_employee_0").val(),
             $employee_num = $("#id_employee_num"),
             $department = $("#id_department");
-        
+        // TODO : AJAX auto fill these two fields
     }
 });
 
