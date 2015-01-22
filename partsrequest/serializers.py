@@ -2,7 +2,7 @@
 from rest_framework import serializers
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from rest_framework.compat import BytesIO
+# from rest_framework.compat import BytesIO
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from dept.models import Employee
@@ -15,21 +15,24 @@ class RequestDetailSerializer(serializers.ModelSerializer):
         model = RequestDetail
         fields = ('pn', 'bin', 'description', 'qty', 'actual_qty', 'unit',
                   'over_plan_usage', 'balance', 'usage_by_once', 'remark')
-        
 
+        
+class PartsRequestSerializer(serializers.ModelSerializer):
+    requestdetail_set = RequestDetailSerializer(many=True)
+    
+    class Meta:
+        model = PartsRequest
+        fields = ('request_no', 'apply_type', 'material_type', 'apply_reason', 'employee',
+                  'employee_num', 'department', 'cost_center', 'approver', 'request_date',
+                  'requestdetail_set')
+    
+
+to_be_removed = """        
 class PartsRequestSerializer(serializers.ModelSerializer):
     requestdetail_set = RequestDetailSerializer(many=True)
     employee = serializers.SlugRelatedField(slug_field='num')
 
     def get_employee_id_by_num(self, num):
-        """
-        Get employee id by employee number. 
-        if the employee is not exist, it will create a new one for the number.
-
-        Arguments:
-        - `self`:
-        - `num`:
-        """
         try:
             e = Employee.objects.get(num=num)
         except ObjectDoesNotExist as e:
@@ -57,5 +60,7 @@ class PartsRequestSerializer(serializers.ModelSerializer):
         model = PartsRequest
         fields = ('request_no', 'apply_type', 'material_type', 'apply_reason', 'employee',
                   'cost_center', 'approver', 'request_date', 'requestdetail_set')
+"""
+
 
 

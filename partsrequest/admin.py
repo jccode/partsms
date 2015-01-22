@@ -58,21 +58,13 @@ class RequestAdmin(admin.ModelAdmin):
     inlines = [RequestDetailInline]
     list_display = ('request_no', 'apply_type', 'material_type', 'request_date', 'apply_reason',
                     'department', 'employee_num',
-                    'employee', 'cost_center', 'approver_name', )
-
-    def department(self, obj):
-        # return obj.employee.department
-        return ""
-    department.short_description = _('department')
-
-    def employee_num(self, obj):
-        # return obj.employee.num
-        return 0
-    employee_num.short_description = _('employee number')
+                    'employee', 'cost_center', 'approver_name',)
+    # fields = ('request_no', 'apply_type', 'material_type', 'apply_reason', ('employee', 'employee_num', 'department'),
+    #           'cost_center', 'approver')
 
     def approver_name(self, obj):
-        # approver_ids = obj.approver
-        # approvers = map(lambda uid: auth.User.objects.get(id=uid).username, approver_ids.split(','))
+        # approver_unames = obj.approver
+        # approvers = map(lambda uid: auth.User.objects.get(id=uid).username, approver_unames.split(','))
         # return "[%s]" % (", ".join(approvers))
         return obj.approver
     approver_name.short_description = _('Approver')

@@ -133,6 +133,7 @@ ADMIN_TOOLS_MENU = 'partsms.menu.CustomMenu'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.DjangoModelPermissions',),
+    'DEFAULT_FILTER_BACKENDS': ('rest_framework.filters.DjangoFilterBackend',), 
     'PAGINATE_BY': 10
 }
 
