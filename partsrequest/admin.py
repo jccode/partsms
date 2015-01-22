@@ -10,6 +10,7 @@ from selectable.forms.fields import AutoCompleteSelectField, AutoCompleteSelectM
 from selectable.forms.widgets import AutoCompleteSelectMultipleWidget, AutoComboboxWidget
 from dept.models import Employee
 from dept.lookups import EmployeeLookup
+from dept.utils import user_str
 
 
 # Register your models here.
@@ -63,10 +64,17 @@ class RequestAdmin(admin.ModelAdmin):
     #           'cost_center', 'approver')
 
     def approver_name(self, obj):
-        # approver_unames = obj.approver
-        # approvers = map(lambda uid: auth.User.objects.get(id=uid).username, approver_unames.split(','))
-        # return "[%s]" % (", ".join(approvers))
-        return obj.approver
+        def display_name(uname):
+            try:
+                u = auth.User.objects.get(username=uname)
+                return user_str(u)
+            except Exception as e:
+                return uname
+            
+        approver_unames = obj.approver
+        approvers = map(display_name, approver_unames.split(','))
+        return "[%s]" % (", ".join(approvers))
+        # return obj.approver
     approver_name.short_description = _('Approver')
 
     # def get_form(self, request, obj=None, **kwargs):

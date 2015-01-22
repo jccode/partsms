@@ -3,8 +3,9 @@
 from selectable.base import ModelLookup
 from selectable.registry import registry
 # from django.contrib.auth.models import User
-from dept.models import Employee
 from selectable.decorators import login_required
+from dept.models import Employee
+from utils import user_str
 
 @login_required
 class EmployeeLookup(ModelLookup):
@@ -17,13 +18,7 @@ class EmployeeLookup(ModelLookup):
         This function should return a string
         """
         if type(item) is Employee:
-            if item.user.last_name and item.user.first_name:
-                val = item.user.last_name + item.user.first_name
-            elif item.user.first_name and not item.user.last_name:
-                val = item.user.first_name
-            else:
-                val = item.user.username
-            return val
+            return user_str(item.user)
         else:
             return item
 
