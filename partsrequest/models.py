@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from datetime import datetime
 from dept.models import Employee
 
 
@@ -20,7 +21,7 @@ class PartsRequest(models.Model):
     # department =   # TODO: ForeignKey -> Department
     # TODO: approver 会有多个人. 多人选择控件. 但不存在外键关联
     approver = models.CharField(_('Approver'), max_length=200)
-    request_date = models.DateTimeField(_('Request Date'), auto_now_add=True)
+    request_date = models.DateTimeField(_('Request Date'), default=datetime.now())
 
     def __unicode__(self):
         return self.request_no
