@@ -61,7 +61,7 @@ class RequestAdmin(admin.ModelAdmin):
                     'department', 'employee_num',
                     'employee', 'cost_center', 'approver_name',)
     # fields = ('request_no', 'apply_type', 'material_type', 'apply_reason', ('employee', 'employee_num', 'department'),
-    #           'cost_center', 'approver')
+    #           'cost_center', 'approver', 'request_date')
 
     def approver_name(self, obj):
         def display_name(uname):

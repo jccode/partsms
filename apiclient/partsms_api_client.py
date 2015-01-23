@@ -61,14 +61,18 @@ def call_partsms_api(data):
         handle.close()
         return True
     except IOError as e:
-        logger.error("Some error occured when invoking partsms api.")
-        if hasattr(e, 'code'):
-            if e.code == 403:
-                logger.error("The authorization of the invocation is error.")
-            elif e.code == 400:
-                logger.error("Data error when invoking the service")
-            else:
-                pass
+        logger.error("Some error occured when invoking partsms api. As belows:")
+        logger.error("----------------------------------------")
+        logger.error(e.read())
+        logger.error("----------------------------------------")
+        # if hasattr(e, 'code'):
+        #     if e.code == 403:
+        #         logger.error("The authorization of the invocation is error.")
+        #     elif e.code == 400:
+        #         logger.error("Data error when invoking the service")
+        #         print e.__dict__
+        #     else:
+        #         pass
         logger.exception(e)
         return False
 
