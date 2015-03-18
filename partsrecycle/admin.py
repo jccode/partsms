@@ -121,7 +121,6 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
                        ('store_in_date', 'store_in_num'))
         }
     ]
-
     change_form_template = 'admin/partsrecycle/change_form.html'
     change_list_template = 'admin/partsrecycle/change_list.html'
     form = PartsRecycleForm
@@ -187,9 +186,15 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
 
     def get_list_filter(self, request):
         if statusUrl.get_url_status(request) == statusUrl.STATUS_QUERY:
-            return ('state', )
+            return ('state', 'return_date', )
         return None
 
+    def get_search_fields(self, request):
+        if statusUrl.get_url_status(request) == statusUrl.STATUS_QUERY:
+            return ['request_no__request_no', ]
+        return None
+        
+        
     def get_list_display(self, request):
         fields = ('request_no', 'parts', 'pn', 'sn', 'tool', 'stn', 'employee', 'shift',
                     'return_date', 'state')
