@@ -46,10 +46,11 @@ INSTALLED_APPS = (
     'fsm_admin',
     'rest_framework',
     'selectable', 
+    'import_export', 
 
     'dept', 
     'partsrequest',
-    'partsrecycle', 
+    'partsrecycle',
 )
 
 MIDDLEWARE_CLASSES = (

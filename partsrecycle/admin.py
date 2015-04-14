@@ -16,6 +16,8 @@ from django.http import Http404, HttpResponseRedirect
 from django.utils.translation import ugettext as _
 from django.utils.encoding import force_text
 from fsm_admin.mixins import FSMTransitionMixin
+from import_export import resources
+from import_export.admin import ExportMixin, ImportExportActionModelAdmin, ImportExportModelAdmin
 from partsrecycle.models import PartsRecycle, Status
 from partsrecycle.views import permission_denied_view
 from partsrecycle.utils import statusUrl
@@ -42,6 +44,11 @@ def permisson_required_decorator(perm, login_url=None):
     return real_decorator
 
 
+class PartsRecycleResource(resources.ModelResource):
+    class Meta:
+        model = PartsRecycle
+
+    
 class PartsRecycleChangeList(ChangeList):
     """
     ChangeList for parts recycle
@@ -90,7 +97,8 @@ class PartsRecycleForm(forms.ModelForm):
                 self.fields.get(field).required = True
         
 
-class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
+
+class PartsRecycleAdmin(FSMTransitionMixin, ImportExportActionModelAdmin, admin.ModelAdmin):
     _fields = [
         {
             'group': 'Parts', 
@@ -124,6 +132,7 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
     change_form_template = 'admin/partsrecycle/change_form.html'
     change_list_template = 'admin/partsrecycle/change_list.html'
     form = PartsRecycleForm
+    resource_class = PartsRecycleResource
             
     def get_form(self, request, obj=None, **kwargs):
         status = Status.DRAFT
@@ -181,7 +190,7 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
             my_urls.append(url(r'^'+url_suffix+'/(.+)/$',
                                self.change_view,
                                name='%s_%s_change_%s' % info2))
-            
+
         return my_urls + urls
 
     def get_list_filter(self, request):
@@ -204,9 +213,18 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
 
         
     def get_actions(self, request):
+        # if statusUrl.get_url_status(request) != Status.DRAFT:
+        #     return None
+        actions = super(PartsRecycleAdmin, self).get_actions(request)
+        # print actions
         if statusUrl.get_url_status(request) != Status.DRAFT:
-            return None
-        return super(PartsRecycleAdmin, self).get_actions(request)
+            actions.pop('delete_selected', None)
+        if statusUrl.get_url_status(request) != statusUrl.STATUS_QUERY:
+            actions.pop('export_admin_action', None)
+        print actions
+        print self.action_form
+        return actions
+        
         
     def get_changelist(self, request, **kwargs):
         return PartsRecycleChangeList
@@ -220,6 +238,7 @@ class PartsRecycleAdmin(FSMTransitionMixin, admin.ModelAdmin):
 
     def changelist_view(self, request, extra_context=None):
         extra_context = self._populate_status_to_extra_context(request, extra_context)
+        # extra_context['action_form'] = None
         return super(PartsRecycleAdmin, self).changelist_view(request, extra_context)
 
     def change_view(self, request, object_id, form_url='', extra_context=None):
